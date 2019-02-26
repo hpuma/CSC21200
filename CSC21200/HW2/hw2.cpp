@@ -152,19 +152,45 @@ return onPlane;
 // NEED TO MORE TEST !!!!!!!!!!
 bool square(const Point pts[], const size_t size){
     bool isSquare = false;
+    size_t firstLine = 0;
+    size_t i;
+    
     if(size >= 4){
-        double lineOne = pts[0].distance(pts[1]);
-        double lineTwo = pts[1].distance(pts[2]);
-        double lineThree = pts[2].distance(pts[3]);
-        double lineFour = pts[3].distance(pts[0]);
+        for (i = 0 ; i < size - 3; i++ ){
+            double lineOne = pts[i].distance(pts[i+1]);
+            double lineTwo = pts[i+1].distance(pts[i+2]);
+            double lineThree = pts[i+2].distance(pts[i+3]);
+            double lineFour = pts[i+3].distance(pts[i]);
 
-        double diagOne = pts[0].distance(pts[2]) * sqrt(2);
-        double diagTwo = pts[1].distance(pts[3]) * sqrt(2);
+            double diagOne = pts[i].distance(pts[i+2]) * sqrt(2);
+            double diagTwo = pts[i+1].distance(pts[i+3]) * sqrt(2);
 
-        if((lineOne == lineThree)&&(lineTwo == lineFour)){
-            if(diagOne == diagTwo){isSquare = true;}
+            if((lineOne == lineThree)&&(lineTwo == lineFour)){
+                if(diagOne == diagTwo){isSquare = true;}
             }
-        return isSquare;
+        }
+
+        for (size_t j = i ; j < 3 ; j++){
+
+        }
+
+
+
+
+
+
+        // double lineOne = pts[0].distance(pts[1]);
+        // double lineTwo = pts[1].distance(pts[2]);
+        // double lineThree = pts[2].distance(pts[3]);
+        // double lineFour = pts[3].distance(pts[0]);
+
+        // double diagOne = pts[0].distance(pts[2]) * sqrt(2);
+        // double diagTwo = pts[1].distance(pts[3]) * sqrt(2);
+
+        // if((lineOne == lineThree)&&(lineTwo == lineFour)){
+        //     if(diagOne == diagTwo){isSquare = true;}
+        //     }
+        // return isSquare;
     }
     else{
         return isSquare;
