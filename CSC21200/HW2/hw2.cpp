@@ -1,9 +1,5 @@
 #include "hw2.h"
-#include <iostream>
-#include <cmath> 
-using std::cout;
-using std::istream;
-using std::ios;
+
 
 // Put your functions/prototype here
 
@@ -82,17 +78,18 @@ return distVec;
 
 // #11 Line(param)
 bool Point::line(Point pt2){ // origin == A, pt2 == B, pointCopy == C 
-    bool isLine = false; // It isn't a line yet.
-    Point origin(0,0,0); //defining the ORIGIN.
-    if(((x==0) && (y==0 )&&(z==0)) || pt2.origin() ){return isLine;} // Checks to make sure neither points are the origin.
-    else{
+    Point origin(0,0,0); 
+    if((x == 0 && y == 0 && z == 0) && (pt2.origin())){return false;}	
+    if((x == 0 && y == 0 && z == 0) || (pt2.origin())){return true;}
+	if(x == pt2.getX() && y ==pt2.getY() && z == pt2.getZ()) {return true;}
+		
+    
         Point pointCopy(x,y,z); //take copy points of POINT
         Point AB = distanceVec(origin,pt2);
         Point BC = distanceVec(pt2,pointCopy);
         Point crossVec = AB.cross(BC);
-        if(crossVec.getX() == 0 && crossVec.getY() == 0 && crossVec.getZ()==0){isLine = true;}
-    return isLine;
-    }
+        if(crossVec.getX() == 0 && crossVec.getY() == 0 && crossVec.getZ()==0){return true;}
+    return false;
 }
 
 // #12 Cross Product(param)
@@ -151,11 +148,9 @@ return onPlane;
 // #16 Non Member Functions SQUARE
 // NEED TO MORE TEST !!!!!!!!!!
 bool square(const Point pts[], const size_t size){
-  
     if(size >= 4){
         size_t i = 0,j = 0;
         size_t breakOff = size - 3;
-
         for (i = 0 ; i < breakOff; i++){
             double lineOne = pts[i].distance(pts[i+1]);
             double lineTwo = pts[i+1].distance(pts[i+2]);
@@ -187,20 +182,6 @@ bool square(const Point pts[], const size_t size){
     else{return false;}
 }
 
- // double lineOne = pts[0].distance(pts[1]);
-        // double lineTwo = pts[1].distance(pts[2]);
-        // double lineThree = pts[2].distance(pts[3]);
-        // double lineFour = pts[3].distance(pts[0]);
-
-        // double diagOne = pts[0].distance(pts[2]) * sqrt(2);
-        // double diagTwo = pts[1].distance(pts[3]) * sqrt(2);
-
-        // if((lineOne == lineThree)&&(lineTwo == lineFour)){
-        //     if(diagOne == diagTwo){isSquare = true;}
-        //     }
-    
-    
-        // return isSquare;
 // #17 Non Member Functions CENTROID
 // NEED TO MORE TEST !!!!!!!!!!
 Point centroid(const Point pts[], const size_t size){
