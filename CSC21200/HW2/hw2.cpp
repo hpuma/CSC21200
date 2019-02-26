@@ -151,35 +151,43 @@ return onPlane;
 // #16 Non Member Functions SQUARE
 // NEED TO MORE TEST !!!!!!!!!!
 bool square(const Point pts[], const size_t size){
-    bool isSquare = false;
-    size_t firstLine = 0;
-    size_t i;
-    
+  
     if(size >= 4){
-        for (i = 0 ; i < size - 3; i++ ){
+        size_t i = 0,j = 0;
+        size_t breakOff = size - 3;
+
+        for (i = 0 ; i < breakOff; i++){
             double lineOne = pts[i].distance(pts[i+1]);
             double lineTwo = pts[i+1].distance(pts[i+2]);
             double lineThree = pts[i+2].distance(pts[i+3]);
             double lineFour = pts[i+3].distance(pts[i]);
-
             double diagOne = pts[i].distance(pts[i+2]) * sqrt(2);
             double diagTwo = pts[i+1].distance(pts[i+3]) * sqrt(2);
-
             if((lineOne == lineThree)&&(lineTwo == lineFour)){
-                if(diagOne == diagTwo){isSquare = true;}
+                if(diagOne == diagTwo){return true;}
             }
+        }      
+        for (j = i; j < size ; j++){
+           size_t pt2 = 0, pt3 = 0, pt4 = 0;
+           if(j == i){pt2= j+1;   pt3= j+2; pt4= 0;}
+           if(j == i+1){pt2= j+1; pt3= 0;   pt4= 1;}
+           if(j == i+2){pt2= 0;   pt3= 1;   pt4= 2;}
+            double lineOne = pts[j].distance(pts[pt2]);
+            double lineTwo = pts[pt2].distance(pts[pt3]);
+            double lineThree = pts[pt3].distance(pts[pt4]);
+            double lineFour = pts[pt4].distance(pts[j]);
+            double diagOne = pts[j].distance(pts[pt3]) * sqrt(2);
+            double diagTwo = pts[pt2].distance(pts[pt4]) * sqrt(2);
+            if((lineOne == lineThree)&&(lineTwo == lineFour)){
+                if(diagOne == diagTwo){return true;}
+            }   
         }
+        return false;   
+    }
+    else{return false;}
+}
 
-        for (size_t j = i ; j < 3 ; j++){
-
-        }
-
-
-
-
-
-
-        // double lineOne = pts[0].distance(pts[1]);
+ // double lineOne = pts[0].distance(pts[1]);
         // double lineTwo = pts[1].distance(pts[2]);
         // double lineThree = pts[2].distance(pts[3]);
         // double lineFour = pts[3].distance(pts[0]);
@@ -190,13 +198,9 @@ bool square(const Point pts[], const size_t size){
         // if((lineOne == lineThree)&&(lineTwo == lineFour)){
         //     if(diagOne == diagTwo){isSquare = true;}
         //     }
+    
+    
         // return isSquare;
-    }
-    else{
-        return isSquare;
-        }
-}
-
 // #17 Non Member Functions CENTROID
 // NEED TO MORE TEST !!!!!!!!!!
 Point centroid(const Point pts[], const size_t size){
