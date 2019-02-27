@@ -21,7 +21,7 @@ private:
 public:
 	// Constructors
 	Point();
-	Point(double inX=0, double inY=0, double inZ = 0);
+	Point(double inX, double inY, double inZ = 0);
 	Point(const Point& inPt);
 
 	// Get Functions
@@ -43,7 +43,6 @@ public:
 	bool origin();
 	bool line(Point pt2);
 	Point cross(Point pt2);
-	Point distanceVec(Point A, Point B);
 
 	// Friend functions
 	friend istream& operator>>(istream& ins, Point& target);

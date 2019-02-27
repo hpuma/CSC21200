@@ -19,9 +19,9 @@ Point::Point(double inX, double inY, double inZ){
 
 // #4 Copy constructor 
 Point::Point(const Point& inPt){
-     x = inPt.getX(); // gets x coordinate for copy. 
-     y = inPt.getY(); // gets y coordinate for copy. 
-     z = inPt.getZ(); // gets z coordinate for copy.
+     x = inPt.getX(); // Gets x coordinate for copy. 
+     y = inPt.getY(); // Gets y coordinate for copy. 
+     z = inPt.getZ(); // Gets z coordinate for copy.
 }
 
 // #5 Set functions ... Sets the point x,y,z values based on the user's input.
@@ -65,30 +65,20 @@ return totalDistance;
 
 // #10 Origin
 bool Point::origin(){
-return ((x ==0) && (y==0) && (z==0)); // Checks if point is the origin (0,0,0)
-}
-
-Point Point::distanceVec(Point A, Point B){
-    double x_dist = B.getX() - A.getX();
-    double y_dist = B.getY() - A.getY();
-    double z_dist = B.getZ() - A.getZ();
-Point distVec(x_dist,y_dist,z_dist);
-return distVec;
+return ((x ==0) && (y==0) && (z==0)); // Checks if point is the origin (0,0,0).
 }
 
 // #11 Line(param)
-bool Point::line(Point pt2){ // origin == A, pt2 == B, pointCopy == C 
+bool Point::line(Point pt2){ // origin == A, pt2 == B, pointCopy == C.
     Point origin(0,0,0); 
-    if((x == 0 && y == 0 && z == 0) && (pt2.origin())){return false;}	
+    if((x == 0 && y == 0 && z == 0) && (pt2.origin())){return false;}   
     if((x == 0 && y == 0 && z == 0) || (pt2.origin())){return true;}
-	if(x == pt2.getX() && y ==pt2.getY() && z == pt2.getZ()) {return true;}
-		
-    
-        Point pointCopy(x,y,z); //take copy points of POINT
-        Point AB = distanceVec(origin,pt2);
-        Point BC = distanceVec(pt2,pointCopy);
-        Point crossVec = AB.cross(BC);
-        if(crossVec.getX() == 0 && crossVec.getY() == 0 && crossVec.getZ()==0){return true;}
+    if(x == pt2.getX() && y ==pt2.getY() && z == pt2.getZ()) {return true;}
+    Point pointCopy(x,y,z); // Take copy coordinates of POINT.
+    Point AB = pt2 - origin; // Displacement vector AB.
+    Point BC = pointCopy - pt2; // Displacement vector BC.
+    Point crossVec = AB.cross(BC); // Takes the cross produce of AB and BC.
+    if(crossVec.getX() == 0 && crossVec.getY() == 0 && crossVec.getZ()==0){return true;}
     return false;
 }
 
@@ -109,6 +99,7 @@ Point operator+(const Point& pt1, const Point& pt2){
     Point pointSum(xSum,ySum,zSum); // Assigns the sums of each parameter.
 return pointSum;
 }
+
 Point operator-(const Point& pt1, const Point& pt2){
     double xDiff = pt1.getX() - pt2.getX();
     double yDiff = pt1.getY() - pt2.getY();
@@ -146,33 +137,37 @@ return onPlane;
 }
 
 // #16 Non Member Functions SQUARE
-// NEED TO MORE TEST !!!!!!!!!!
 bool square(const Point pts[], const size_t size){
     if(size >= 4){
-        size_t i = 0,j = 0;
-        size_t breakOff = size - 3;
+        size_t i = 0,j = 0; // Both loops can use these variables.
+        size_t breakOff = size - 3; // Computes the last element that has 4 points side by side.
         for (i = 0 ; i < breakOff; i++){
+            // Square formation.
             double lineOne = pts[i].distance(pts[i+1]);
             double lineTwo = pts[i+1].distance(pts[i+2]);
             double lineThree = pts[i+2].distance(pts[i+3]);
             double lineFour = pts[i+3].distance(pts[i]);
             double diagOne = pts[i].distance(pts[i+2]) * sqrt(2);
             double diagTwo = pts[i+1].distance(pts[i+3]) * sqrt(2);
+            // Check diagnols.
             if((lineOne == lineThree)&&(lineTwo == lineFour)){
                 if(diagOne == diagTwo){return true;}
             }
-        }      
+        }
+        // FOR LOOP to check the last 3 points of the array ... we are able to check for all points even though they are not side by side.    
         for (j = i; j < size ; j++){
-           size_t pt2 = 0, pt3 = 0, pt4 = 0;
-           if(j == i){pt2= j+1;   pt3= j+2; pt4= 0;}
-           if(j == i+1){pt2= j+1; pt3= 0;   pt4= 1;}
-           if(j == i+2){pt2= 0;   pt3= 1;   pt4= 2;}
+           size_t pt2 = 0, pt3 = 0, pt4 = 0; // Points that will form the square ... resests each iteration.
+           if(j == i){pt2= j+1;   pt3= j+2; pt4= 0;} // When third last point.
+           if(j == i+1){pt2= j+1; pt3= 0;   pt4= 1;} // When second last point.
+           if(j == i+2){pt2= 0;   pt3= 1;   pt4= 2;} // When last point.
+           // Square formation.
             double lineOne = pts[j].distance(pts[pt2]);
             double lineTwo = pts[pt2].distance(pts[pt3]);
             double lineThree = pts[pt3].distance(pts[pt4]);
             double lineFour = pts[pt4].distance(pts[j]);
             double diagOne = pts[j].distance(pts[pt3]) * sqrt(2);
             double diagTwo = pts[pt2].distance(pts[pt4]) * sqrt(2);
+            // Check diagnols.
             if((lineOne == lineThree)&&(lineTwo == lineFour)){
                 if(diagOne == diagTwo){return true;}
             }   
@@ -183,21 +178,15 @@ bool square(const Point pts[], const size_t size){
 }
 
 // #17 Non Member Functions CENTROID
-// NEED TO MORE TEST !!!!!!!!!!
 Point centroid(const Point pts[], const size_t size){
-    Point origin(0,0,0);
-    if (size == 0){ return origin;}
-    double midX = 0, midY = 0, midZ = 0;
+    Point origin(0,0,0);// Defining the origin.
+    if (size == 0){return origin;} // When the array has no points.
+    double midX = 0, midY = 0, midZ = 0; // Coordinates of midpoint.
     for (size_t i = 0; i < size; i++){
-        midX += pts[i].getX();
-        midY += pts[i].getY();
-        midZ += pts[i].getZ();
+        midX += pts[i].getX(); // Summing up X coordinate.
+        midY += pts[i].getY(); // Summing up Y coordinate.
+        midZ += pts[i].getZ(); // Summing up Z coordinate.
     }
-    Point centroi(midX/size,midY/size,midZ/size);
+    Point centroi(midX/size,midY/size,midZ/size); // Creating midpoint with coordinate value being divided by the number of points.
 return centroi;
 }
-
-    
-
- 
-
