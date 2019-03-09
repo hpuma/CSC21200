@@ -1,32 +1,41 @@
 #include "hw3.h"
 void insertHead(Node*& head, Node*& entry){
-Node *newEntry = new Node(entry->getData(),head);
+Node* newEntry = new Node(entry->getData(),head);
 head = newEntry;
 }
 void insertTail(Node*& head, Node*& entry){
     
-    Node *prev;
-    Node *curr = head;
-    while(curr != NULL){ 
+    Node* prev;
+    Node* curr = head;
+    while(curr->getLink() != NULL){ 
         prev = curr;
         curr = curr->getLink();
     }
-    Node *newData = new Node(entry->getData(),prev);
+    Node* newData = new Node(entry->getData(),prev);
     prev = newData;
+    delete curr;
 }
 
 void insertInd (Node*& head, Node*& entry, size_t pos){
-    Node *curr = head;
+    Node* curr = head;
     size_t count = 0 ;
-    while ((curr != NULL) && (count != pos)){
+    while ((curr->getLink() != NULL) && (count != pos)){
         curr = curr->getLink();
         count++;
     }
     if (count == pos){
-        Node *newEntry  = new Node(entry->getData(),curr);
+        Node* newEntry  = new Node(entry->getData(),curr);
         curr = newEntry;
     }
 }
+void insert(Node*  prev, Node*  entry){
+
+}
+
+
+
+
+
 
 void removeHead(Node* head){
 	Node* curr = head; //When you make a pointer... you make an object that contains the address of the item you're pointing at
