@@ -37,9 +37,9 @@ class Node {
 void insertHead(Node*& head, Node*& entry);//
 void insertTail(Node*& head, Node*& entry);//
 void insertInd (Node*& head, Node*& entry, size_t pos);//
-void insert    (Node*  prev, Node*  entry);
+void insert    (Node*  prev, Node*  entry);//
 
-void insertHead(Node*& head, const Node::nodeDatatype& entry);//
+void insertHead(Node*& head, const Node::nodeDatatype& entry);
 void insertTail(Node*& head, const Node::nodeDatatype& entry);
 void insertInd (Node*& head, const Node::nodeDatatype& entry, size_t pos);//
 void insert    (Node*  prev, const Node::nodeDatatype& entry);

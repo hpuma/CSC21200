@@ -1,36 +1,53 @@
 #include "hw3.h"
+
+
 void insertHead(Node*& head, Node*& entry){
-Node* newEntry = new Node(entry->getData(),head);
-head = newEntry;
+entry->setLink(head->getLink());
+head->setLink(entry);
 }
 void insertTail(Node*& head, Node*& entry){
-    
-    Node* prev;
     Node* curr = head;
     while(curr->getLink() != NULL){ 
-        prev = curr;
         curr = curr->getLink();
     }
-    Node* newData = new Node(entry->getData(),prev);
-    prev = newData;
-    delete curr;
+    curr->setLink(entry);
+    entry->setLink(NULL);
 }
 
-void insertInd (Node*& head, Node*& entry, size_t pos){
-    Node* curr = head;
-    size_t count = 0 ;
-    while ((curr->getLink() != NULL) && (count != pos)){
+void insertInd(Node*& head, Node*& entry, size_t pos){
+    Node *curr = head;
+    size_t count = 0;
+    while(curr->getLink()!=NULL && count != pos){
         curr = curr->getLink();
         count++;
     }
-    if (count == pos){
-        Node* newEntry  = new Node(entry->getData(),curr);
-        curr = newEntry;
+    if(count == pos){
+        entry->setLink(curr->getLink());
+        curr->setLink(entry);
     }
 }
-void insert(Node*  prev, Node*  entry){
 
+void insert(Node*  prev, Node*  entry){
+entry->setLink(prev->getLink());
+prev->setLink(entry);
 }
+
+void insertHead(Node*& head, const Node::nodeDatatype& entry){
+    Node* newNode = new Node(entry,head->getLink());
+    head->setLink(newNode);
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
