@@ -39,21 +39,21 @@ void insertTail(Node*& head, Node*& entry);//
 void insertInd (Node*& head, Node*& entry, size_t pos);//
 void insert    (Node*  prev, Node*  entry);//
 
-void insertHead(Node*& head, const Node::nodeDatatype& entry);
-void insertTail(Node*& head, const Node::nodeDatatype& entry);
+void insertHead(Node*& head, const Node::nodeDatatype& entry);//
+void insertTail(Node*& head, const Node::nodeDatatype& entry);//
 void insertInd (Node*& head, const Node::nodeDatatype& entry, size_t pos);//
-void insert    (Node*  prev, const Node::nodeDatatype& entry);
+void insert    (Node*  prev, const Node::nodeDatatype& entry);//
 
-bool isCycle(Node* head);
-bool isEmpty(Node* head);
-bool isValid(Node* head, size_t pos);
+bool isCycle(Node* head); // OMIT FOR NOW
+bool isEmpty(Node* head); //
+bool isValid(Node* head, size_t pos);//
 
-size_t length(Node* head);
+size_t length(Node* head);// 
 
-Node* listLocate      (Node* head, size_t position);
-const Node* listLocate(const Node* head, size_t pos);
+Node* listLocate      (Node* head, size_t position);//
+const Node* listLocate(const Node* head, size_t pos);//
 
-Node* listSearch      (Node* head, const Node::nodeDatatype& target);
+Node* listSearch      (Node* head, const Node::nodeDatatype& target); // CURRENTY
 const Node* listSearch(const Node* head, const Node::nodeDatatype& target);
 
 void removeHead  (Node*& head);//
