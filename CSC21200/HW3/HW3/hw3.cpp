@@ -1,8 +1,10 @@
 #include "hw3.h"
+//
 void insertHead(Node*& head, Node*& entry){
 entry->setLink(head);
-
+head = entry;
 }
+//
 void insertTail(Node*& head, Node*& entry){
     Node* curr = head;
     while(curr->getLink() != NULL){ 
@@ -11,27 +13,28 @@ void insertTail(Node*& head, Node*& entry){
     curr->setLink(entry);
     entry->setLink(NULL);
 }
-
+//
 void insertInd (Node*& head, Node*& entry, size_t pos){
     Node* curr = head;
-    size_t count = 1;
-    while ((curr->getLink() != NULL) && (count != pos)){
+    size_t index = 1;
+    while ((curr->getLink() != NULL) && (index != pos)){
         curr = curr->getLink();
-        count++;
+        index++;
     }
     insert(curr,entry); 
 }
+//
 void insert(Node*  prev, Node*  entry){
     entry->setLink(prev->getLink());
     prev->setLink(entry);
 }
 
 
-//functions with given data only 
+//functions with given data only //
 void insertHead(Node*& head, const Node::nodeDatatype& entry){
-    Node* newEntry = new Node(entry,head->getLink());
-    head->setLink(newEntry);
+    Node* newEntry = new Node(entry,head);
 }
+//
 void insertTail(Node*& head, const Node::nodeDatatype& entry){
     Node* curr = head;
     while(curr->getLink() != NULL){
@@ -40,30 +43,33 @@ void insertTail(Node*& head, const Node::nodeDatatype& entry){
     Node* newEntry = new Node(entry,NULL);
     curr->setLink(newEntry);
 }
+//
 void insertInd(Node*& head, const Node::nodeDatatype& entry,size_t pos){
     Node* curr = head;
-    Node* prev = curr;
-    size_t count = 1;
-    while((curr->getLink() != NULL)&&(count != pos)){
+    Node* prev;
+    size_t index = 0;
+    while((curr->getLink() != NULL)&&(index != pos)){
         prev = curr;
         curr = curr->getLink();
-        count++;
+        index++;
     }
-    if(count == pos){
+    if(index == pos){
         Node* newEntry = new Node(entry,curr->getLink());
         curr->setLink(newEntry);
     }
 
 }
-
+//
 void insert(Node* prev, const Node::nodeDatatype& entry){
     Node* newEntry = new Node(entry, prev->getLink());
     prev->setLink(newEntry);
 }
 
 //isCycle is OMMITED FOR NOW 
-WAS DONE IN CLASS /.....
- bool isCycle(Node* head){}
+
+ bool isCycle(Node* head){
+     cout<<"Heello";
+ }
 
 // When the list is empty, the head MUST point at NULL.
 bool isEmpty(Node* head){
@@ -73,11 +79,11 @@ return (head->getLink() == NULL);
 // Checks if an index exists in a list
 bool isValid(Node *head, size_t pos){
     Node* curr = head;
-    size_t count = 0;
+    size_t index = 0;
     while(curr->getLink() !=NULL){
         curr = curr->getLink();
-        count++;
-        if(count == pos){return true;}
+        index++;
+        if(index == pos){return true;}
     }
     return false; // If we have iterated throughout the entire list and we have not found the index pos.
 }
@@ -85,19 +91,19 @@ bool isValid(Node *head, size_t pos){
 // Returns the length of the linked list ... NEED TO VERIFY
 size_t length(Node* head){
     Node* curr = head;
-    size_t count = 1;
+    size_t index = 1;
     while(curr->getLink() != NULL){
         curr = curr->getLink();
-        count++;
+        index++;
     }
-    return count;
+    return index;
 }
 
 // Checks if a current node exists at a certain position
 Node* listLocate(Node* head, size_t position){
     Node* curr = head;
     size_t index = 0;
-    while (curr->getLink() !=NULL){
+    while (curr->getLink() != NULL){
         curr = curr->getLink();
         index++;
         if(index == position){return curr;}
@@ -140,20 +146,17 @@ const Node* listSearch(const Node* head, const Node::nodeDatatype& target){
 
 
 
-void removeHead(Node* head){
-	Node* curr = head; //When you make a pointer... you make an object that contains the address of the item you're pointing at
-	head = curr ->getLink();
-	delete curr; //delete the node where the curr is pointing at... delete is a keyword
+void removeHead(Node*& head){
+	Node* removeHead = head;
+    head = removeHead->getLink();
+    delete removeHead;
 }
 void removeTail(Node* head){
 	Node* curr = head;
-	Node* prev; // keeps track of the previous head
-
 	while(curr -> getLink() != NULL){ //looks through the list until it encounters null
-		prev = curr;
 		curr = curr ->getLink();
 	}
-	remove(prev);
+	delete curr;
 }
 void removeInd(Node*& head, size_t pos){
     assert(pos != 0); // This function will work on anything besides the head because there is no way of getting the previous node before the HEAD!
@@ -174,9 +177,8 @@ void removeInd(Node*& head, size_t pos){
 
 
 void remove(Node* prev){
-	Node* curr;
-	curr = prev ->getLink(); // You set curr to the node you want to delete
-	prev -> setLink(curr->getLink()); // Set prev to the node that the delete node is looking at
+    Node* curr = prev ->getLink(); // You set curr to the node you want to delete
+    prev -> setLink(curr->getLink()); // Set prev to the node that the delete node is looking at
 	delete curr; // This deleted the node marked for deletion.
 }
 void removeAll(Node*& head){
@@ -193,7 +195,8 @@ void removeFromTo(Node*& head, size_t from, size_t to){
 Node* curr = head;
 Node* entryStore;
 Node* freeMe;
-size_t index = 0, from1 = from -1; // from1 : the index of the node that is before the first deleted node
+size_t index = 0, 
+from1 = from -1; // from1 : the index of the node that is before the first deleted node
 while((curr != NULL)&&(index <= to)){ // .. NOT SURE IF DELETION IS INCLUSIVE OR NOT 
     if(index == from1){
         entryStore = curr; // Store the previous node that is being delete... this will be used to link the right most node after everything has been deleted.
@@ -213,7 +216,7 @@ void removeHeadTo(Node*& head, size_t to){
     Node* curr = head;
     Node* freeMe;
     size_t index = 0;
-    while ((curr != NULL)&&(index < to)){ // Only iterate up to the to position... that's what we care about being deleted 
+    while ((curr != NULL)&&(index <= to)){ // Only iterate up to the to position... that's what we care about being deleted 
         freeMe = curr;
         curr = curr->getLink();
         delete freeMe;
@@ -249,7 +252,7 @@ void print(Node* head){
     }
 }
 
-// UNFINISHED ... refer to pdf ... FEEL FREE TO MAKE YOUR OWn
+// fixed
 void swap(Node*& head, size_t pos){
     Node* curr = head; // as always 
     Node *N1, *N2; // Points to the nodes that must be swapped.
@@ -268,9 +271,36 @@ void swap(Node*& head, size_t pos){
         curr = curr->getLink();
         index++;
     }
+    N1->setLink(N2->getLink());
+    N2->setLink(N1);
+    prev->setLink(N2);
+}
 
+//MUST TEST
+void swap(Node*& head, size_t posI, size_t posJ){
+    Node* curr = head; 
+    Node  *P1, *P2, *P3, *P4, *N1,*N2;
+    size_t index = 0, 
+    pos1 = posI - 1, 
+    pos2 = posI + 1,
+    pos3 = posJ - 1,
+    pos4 = posJ + 1;    
 
+    while(index < pos4){
+        if(index == pos1){ P1 = curr;}
+        if(index == posI){ N1 = curr;}
+        if(index == pos2){ P2 = curr;}
+        if(index = pos3){ P3 = curr;}
+        if(index = posJ){ N2 = curr;}
+        if(index = pos4){ P4 = curr;}
+        curr = curr->getLink();
+        index++;
+    }
+    N1->setLink(P4);  
+    P3->setLink(N1);
+
+    N2->setLink(P2);
+    P1->setLink(N2);
 
 
 }
-void swap(Node*& head, size_t posI, size_t posJ){}
