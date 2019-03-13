@@ -1,7 +1,7 @@
 #include "hw3.h"
 void insertHead(Node*& head, Node*& entry){
-entry->setLink(head->getLink());
-head->setLink(entry);
+entry->setLink(head);
+
 }
 void insertTail(Node*& head, Node*& entry){
     Node* curr = head;
@@ -61,8 +61,9 @@ void insert(Node* prev, const Node::nodeDatatype& entry){
     prev->setLink(newEntry);
 }
 
-//isCycle is OMMITED FOR NOW
-// bool isCycle(Node* head);
+//isCycle is OMMITED FOR NOW 
+WAS DONE IN CLASS /.....
+ bool isCycle(Node* head){}
 
 // When the list is empty, the head MUST point at NULL.
 bool isEmpty(Node* head){
@@ -119,11 +120,23 @@ const Node* listLocate(const Node* head, size_t pos){
 }
 
 
-// CURRENTLY
+// Searches the list for a specific data 
 Node* listSearch(Node* head, const Node::nodeDatatype& target){
-return NULL;
+Node* curr = head;
+while(curr->getLink() != NULL){
+    if(curr->getData() == target){return curr;}
+    curr = curr->getLink();
 }
-
+return NULL; // when the list does not find the target data
+}
+// listSearch 2.0
+const Node* listSearch(const Node* head, const Node::nodeDatatype& target){
+    const Node* curr = head;
+    while(curr->getLink() != NULL){
+        if(curr->getData() == target){return curr;}
+        curr = curr->getLink();
+    }
+}
 
 
 
@@ -142,21 +155,122 @@ void removeTail(Node* head){
 	}
 	remove(prev);
 }
-void removeInd   (Node*& head, size_t pos){}
+void removeInd(Node*& head, size_t pos){
+    assert(pos != 0); // This function will work on anything besides the head because there is no way of getting the previous node before the HEAD!
+    Node* curr = head;
+    Node* prev;
+    size_t index = 0; // Used to keep track of the index we are currently in
+    while(curr->getLink() != NULL){
+        if(index == pos){ 
+            remove(prev);
+            break;
+        }
+        prev = curr;
+        curr = curr->getLink();
+        index++;
+    }
+}
+//You must know the node before the one you want to delete.
+
+
 void remove(Node* prev){
 	Node* curr;
-	curr = prev ->getLink();
-	prev -> setLink(curr->getLink());
-	delete curr;
+	curr = prev ->getLink(); // You set curr to the node you want to delete
+	prev -> setLink(curr->getLink()); // Set prev to the node that the delete node is looking at
+	delete curr; // This deleted the node marked for deletion.
 }
-void removeAll   (Node*& head){}
-void removeFromTo(Node*& head, size_t from, size_t to){}
-void removeHeadTo(Node*& head, size_t to){}
-void removeToTail(Node*& head, size_t from){}
+void removeAll(Node*& head){
+    Node* curr = head;
+    Node* freeMe; // Temp storage for deleted node
+    while(curr != NULL){ // Goes through the entire loop and deletes each node
+        freeMe = curr; // Store the node marked for deletion
+        curr = curr->getLink(); // Move on t the next node
+        delete freeMe; //  Delete the node marked for deletion.
+        //NOTE: delete is faster than free()
+    }
+}
+void removeFromTo(Node*& head, size_t from, size_t to){
+Node* curr = head;
+Node* entryStore;
+Node* freeMe;
+size_t index = 0, from1 = from -1; // from1 : the index of the node that is before the first deleted node
+while((curr != NULL)&&(index <= to)){ // .. NOT SURE IF DELETION IS INCLUSIVE OR NOT 
+    if(index == from1){
+        entryStore = curr; // Store the previous node that is being delete... this will be used to link the right most node after everything has been deleted.
+        curr = curr->getLink();
+    }
+    if (index > from ){ // reponsible for deleting the NODES 
+        freeMe = curr;
+        curr = curr->getLink();
+        delete freeMe;
+    }
+    index++;
+}
+entryStore->setLink(curr); // Links the left most node to the right most node;
+}
 
+void removeHeadTo(Node*& head, size_t to){
+    Node* curr = head;
+    Node* freeMe;
+    size_t index = 0;
+    while ((curr != NULL)&&(index < to)){ // Only iterate up to the to position... that's what we care about being deleted 
+        freeMe = curr;
+        curr = curr->getLink();
+        delete freeMe;
+        index++;
+    }
+}
+void removeToTail(Node*& head, size_t from){
+    Node* curr = head;
+    Node* freeMe; // used to store the node we're deleting 
+    size_t index = 0;
+    while(curr != NULL){
+        if(index > from){ // onced we are greater than from .. we start deleting nodes 
+            freeMe = curr; // set deleted node to free me
+            curr = curr->getLink(); // move on to next node first!
+            delete freeMe; // delete the node
+        }
+        else{
+        curr = curr->getLink();
+        }
+        index++;
+    }
+}
+
+//reverses the entire list
 void reverse(Node*& head){}
 
-void print(Node* head){}
+// prints out the entire linked list
+void print(Node* head){
+    Node* curr = head;
+    while(curr != NULL){
+        cout<<curr->getData()<<"|\t";
+        curr = curr->getLink();
+    }
+}
 
-void swap(Node*& head, size_t pos){}
+// UNFINISHED ... refer to pdf ... FEEL FREE TO MAKE YOUR OWn
+void swap(Node*& head, size_t pos){
+    Node* curr = head; // as always 
+    Node *N1, *N2; // Points to the nodes that must be swapped.
+    Node* prev; // STORES NODE BEFORE FIRST NODE "N1"
+
+    size_t pos1 = pos-1, pos2 = pos +1, index = 0; 
+    // pos1 : index of node before first the first swapped "prev"
+    //pos: index of first node being swapped "N1"
+    // pos2 : index of second node being swapped "N2"
+
+    while(index <= pos2){
+        // Conditions on setting up prev, N1, and N2
+        if(index == pos1){ prev = curr;}
+        if(index == pos) {  N1 = curr; }
+        if(index == pos2){ N2 = curr;  }
+        curr = curr->getLink();
+        index++;
+    }
+
+
+
+
+}
 void swap(Node*& head, size_t posI, size_t posJ){}
