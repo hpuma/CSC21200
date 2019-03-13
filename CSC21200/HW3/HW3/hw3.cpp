@@ -68,7 +68,7 @@ void insert(Node* prev, const Node::nodeDatatype& entry){
 //isCycle is OMMITED FOR NOW 
 
  bool isCycle(Node* head){
-     cout<<"Heello";
+     return true;
  }
 
 // When the list is empty, the head MUST point at NULL.
@@ -142,6 +142,7 @@ const Node* listSearch(const Node* head, const Node::nodeDatatype& target){
         if(curr->getData() == target){return curr;}
         curr = curr->getLink();
     }
+    return NULL;
 }
 
 
