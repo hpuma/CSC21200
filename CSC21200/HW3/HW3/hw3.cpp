@@ -1,27 +1,41 @@
 #include "hw3.h"
 //
 void insertHead(Node*& head, Node*& entry){
-entry->setLink(head);
-head = entry;
+    if(head == NULL){
+        head = entry;
+    }
+    else{
+        entry->setLink(head);
+        head = entry;
+    }
 }
 //
 void insertTail(Node*& head, Node*& entry){
-    Node* curr = head;
-    while(curr->getLink() != NULL){ 
-        curr = curr->getLink();
+    Node *curr = head;
+    if(head == NULL){
+    head = entry;
     }
-    curr->setLink(entry);
-    entry->setLink(NULL);
+    else{
+        while(curr->getLink() != NULL){ 
+            curr = curr->getLink();
+        }
+        curr->setLink(entry);
+    }   
 }
 //
 void insertInd (Node*& head, Node*& entry, size_t pos){
     Node* curr = head;
     size_t index = 1;
-    while ((curr->getLink() != NULL) && (index != pos)){
-        curr = curr->getLink();
-        index++;
+    if(head == NULL){
+        head = entry;
     }
-    insert(curr,entry); 
+    else{
+        while ((curr != NULL) && (index != pos)){
+            curr = curr->getLink();
+            index++;
+        }
+        insert(curr,entry); 
+    }
 }
 //
 void insert(Node*  prev, Node*  entry){
@@ -32,32 +46,46 @@ void insert(Node*  prev, Node*  entry){
 
 //functions with given data only //
 void insertHead(Node*& head, const Node::nodeDatatype& entry){
-    Node* newEntry = new Node(entry,head);
+    if(head == NULL){
+        Node* newEntry = new Node(entry);
+        head = newEntry;
+    }
+    else{
+        Node* newEntry = new Node(entry,head); 
+        head = newEntry; 
+    }
+    
 }
 //
 void insertTail(Node*& head, const Node::nodeDatatype& entry){
     Node* curr = head;
+    Node newEntry(entry,NULL);
+    Node* newEntry_p = &newEntry;
     while(curr->getLink() != NULL){
         curr = curr->getLink();
     }
-    Node* newEntry = new Node(entry,NULL);
-    curr->setLink(newEntry);
+curr->setLink(newEntry_p);
+
 }
 //
 void insertInd(Node*& head, const Node::nodeDatatype& entry,size_t pos){
-    Node* curr = head;
-    Node* prev;
-    size_t index = 0;
-    while((curr->getLink() != NULL)&&(index != pos)){
-        prev = curr;
-        curr = curr->getLink();
-        index++;
+    if(head == NULL){
+        Node* newEntry = new Node(entry,NULL);
+        head = newEntry;
     }
-    if(index == pos){
-        Node* newEntry = new Node(entry,curr->getLink());
-        curr->setLink(newEntry);
-    }
+    else{
+        Node* curr = head;
+        size_t index = 1;
 
+        while((curr->getLink() != NULL)&&(index != pos)){
+            curr = curr->getLink();
+            index++;
+        }
+        if(index == pos-1){
+            Node* newEntry = new Node(entry,curr->getLink());
+            curr->setLink(newEntry);
+        }
+    }
 }
 //
 void insert(Node* prev, const Node::nodeDatatype& entry){
@@ -77,7 +105,7 @@ return (head->getLink() == NULL);
 }
 
 // Checks if an index exists in a list
-bool isValid(Node *head, size_t pos){
+bool isValid(Node* head, size_t pos){
     Node* curr = head;
     size_t index = 0;
     while(curr->getLink() !=NULL){
@@ -152,7 +180,7 @@ void removeHead(Node*& head){
     head = removeHead->getLink();
     delete removeHead;
 }
-void removeTail(Node* head){
+void removeTail(Node*& head){
 	Node* curr = head;
 	while(curr -> getLink() != NULL){ //looks through the list until it encounters null
 		curr = curr ->getLink();
