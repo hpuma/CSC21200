@@ -1,113 +1,113 @@
 #include "hw3.h"
-
+// E: 3/14/19 6:55 AM
 //
 void insertHead(Node*& head, Node*& entry){
-    entry->setLink(head);
-    head = entry;
+    entry->setLink(head); // Links the entry node to the head node.
+    head = entry; // Sets the head pointer to the entry node, the entry node is the new head.
 }
 //
 void insertTail(Node*& head, Node*& entry){
     Node *curr = head;
-    if(head != NULL){
-        while(curr->getLink() != NULL){ 
+    if(head != NULL){ // When the list is NOT empty.
+        while(curr->getLink() != NULL){ // Iteration.
             curr = curr->getLink();
         }
-        entry->setLink(NULL);
-        curr->setLink(entry);
+        entry->setLink(NULL);   // After we finish iterating, we set the entry node to NULL
+        curr->setLink(entry);   // The tail node points to the entry node, the entry node is now the tail node.
     }
-    if(head == NULL){
-        entry->setLink(NULL);
-        head = entry;
+    if(head == NULL){   // When the head pointer is not pointing to anything.
+        entry->setLink(NULL); // Set the entry link to NULL.
+        head = entry;   // The entry node become the head.
     }    
 }
 //
 void insertInd (Node*& head, Node*& entry, size_t pos){
     Node* curr = head;
-    size_t index = 1;
+    size_t index = 1; // Set the index to 1 so that we dont have to keep track of previous
     if(head != NULL){
         while ((curr != NULL) && (index != pos)){
             curr = curr->getLink();
             index++;
         }
-        insert(curr,entry); 
+        insert(curr,entry); // Apply the insert function... stops iterating before pos and inserts.
     }
 
-    if(head == NULL){
+    if(head == NULL){ // If the head pointer is not pointing to a node, then the entry node becomes the head node.
         head = entry;
     }
 }
 //
-void insert(Node*  prev, Node*  entry){
-    entry->setLink(prev->getLink());
-    prev->setLink(entry);
+void insert(Node*  prev, Node*  entry){ // Inserts a node based on the previous node given.
+    entry->setLink(prev->getLink()); // Sets the entry node before the position node.
+    prev->setLink(entry);   // Links the previous node to the entry node, the entry node is now the position node.
 }
 //
 void insertHead(Node*& head, const Node::nodeDatatype& entry){
-    Node* newEntry = new Node(entry);
-    if(head != NULL){
+    Node* newEntry = new Node(entry); // Creates a node with the data given by the user.
+    if(head != NULL){   // If a head already exists, then the new node links to it.
     newEntry->setLink(head);
     }
-    head = newEntry;
+    head = newEntry; // The new entry node is now the head node.
 }
 //
 void insertTail(Node*& head, const Node::nodeDatatype& entry){
-    Node* newEntry = new Node(entry);
-    if(head != NULL){
+    Node* newEntry = new Node(entry); // Create a node with the data given by the user. BY DEFAULT: IT LINKS TO NULL.
+    if(head != NULL){   // If the list is not empty, then iterate to the tail node.
         Node* curr = head;
         while(curr->getLink() != NULL){
             curr = curr->getLink();
         }
-        curr->setLink(newEntry);
+        curr->setLink(newEntry);    // Link the tail node to the new node. The new node is now the tail node.
     }
-    if(head == NULL){
+    if(head == NULL){   // If there is no head node, then make the new node the head node.
         head = newEntry;
     }
 }
 //
 void insertInd(Node*& head, const Node::nodeDatatype& entry,size_t pos){
 
-    if(head != NULL){
-        Node* curr = head;
-        size_t index = 1;
+    if(head != NULL){ // When the linked list is not empty.
+        Node* curr = head; // Prepare for iteratig.
+        size_t index = 1; 
 
         while((curr != NULL)&&(index != pos)){
             curr = curr->getLink();
             index++;
         }
 
-        if(index == pos){
+        if(index == pos){ // If we stop at the index, then insert the new node.
             insert(curr,entry);
         }     
     }
 
-    if(head == NULL){
+    if(head == NULL){ // If the list is empty, then make a new node with the given data and make it the head node.
         Node* newEntry = new Node(entry);
         head = newEntry;
     }
     
 }
 //
-void insert(Node* prev, const Node::nodeDatatype& entry){
+void insert(Node* prev, const Node::nodeDatatype& entry){ // We must know the node before the insert node... Inserts a node with the data given by the user
     Node* newEntry = new Node(entry, prev->getLink());
     prev->setLink(newEntry);
 }
 //
 bool isCycle(Node* head){
 
-    if(head->getLink() == NULL){return false;}
-        Node* start = head;
-        Node* curr = head;
+    if(head->getLink() == NULL){return false;} // If there is only one node ... then it is not a cycle.
+        Node* start = head; // A reference point for checking for a cycle.
+        Node* curr = head;  // Used for iteration.
 
-    while(curr != NULL){
-        if(curr = start){return true;}
+    while(curr != NULL){ // Begin iteration.
+        if(curr = start){return true;} // If we find ourselves at the beginning again, then we are in a cycle so return true;
             curr = curr->getLink();
     }
 
-    if(curr == NULL){return true;}
+    if(curr == NULL){return true;} // If we end the iteration and we are at NULL, then we are NOT in a cycle so return false;
  }
 
 //
-bool isEmpty(Node* head){
+bool isEmpty(Node* head){ // Return if the head is pointing to NULL or NOT. Then we know our list is valid. Every list needs a head.
 return (head == NULL);
 }
 
@@ -116,28 +116,28 @@ bool isValid(Node* head, size_t pos){
      Node* curr = head;
     size_t index = 0;
 
-    if((head == NULL)){return false;}
+    if((head == NULL)){return false;} // If the head pointer is pointing to null then there is no way for a list to contain a node in pos.
 
-    if((head->getLink() == NULL) && (pos == 0)){return true;}
+    if((head->getLink() == NULL) && (pos == 0)){return true;} // If we only have one node at position 0, and we are interested in that node, then it is valid so return true;
     
-    while((curr->getLink() != NULL) && (index != pos)){
+    while((curr->getLink() != NULL) && (index != pos)){ // If none of the above cases are true, then begin iteration.
         curr = curr->getLink();
         index++;
     }
 
-    if(index == pos){return true;}
+    if(index == pos){return true;} // If we meet with the desired position, then it is valid so return true;
 
-    if(index != pos){return false;}
+    if(index != pos){return false;} // If we have completed the cycle and we haven't met the position, then return false;
     
 }
 
 //
 size_t length(Node* head){
-    if(head == NULL){return 0;}
+    if(head == NULL){return 0;} // If the head pointer is pointing at null then the list length is 0.
     Node* curr = head;
-    size_t index = 1;
+    size_t index = 1; // Length begins at 1 if the list is not empty.
 
-    while(curr->getLink() != NULL){
+    while(curr->getLink() != NULL){ // Iteration that keeps track of the length.
         curr = curr->getLink();
         index++;
     }
@@ -191,60 +191,60 @@ const Node* listSearch(const Node* head, const Node::nodeDatatype& target){
 return NULL;
 }
 //
-void removeHead(Node*& head){
+void removeHead(Node*& head){ // Begin at the head.
     Node* freeMe;
-    freeMe =  head;
-    head = head->getLink();
-    delete freeMe;
+    freeMe =  head; // Set a temporary pointer to the head.
+    head = head->getLink(); // Move one node after the head. The new head is the neighboring node.
+    delete freeMe;  // Delete the head that is stored in the temporary pointer.
 }
 //
 void removeTail(Node*& head){
 
-    if(head->getLink() == NULL){removeHead(head);} // THIS TOOK ME VERY LONG TO FIGURE OUT ... but it was worth it, I learned something new.
+    if(head->getLink() == NULL){removeHead(head);} // THIS TOOK ME VERY LONG TO FIGURE OUT ... but it was worth it, I learned something new. Remove the head if there is only one node!
     else{
         Node* curr = head;
         Node* prev;
 
-        while(curr->getLink()!= NULL){
+        while(curr->getLink()!= NULL){ // Iteration, while keeping track of the node before
             prev = curr;
             curr = curr->getLink();
         }
-        prev->setLink(NULL);
-        delete curr;
+        prev->setLink(NULL); // Isolate the tail node by breaking off the link bewteen the node tail and the node before it.
+        delete curr; // Delete the tail node.
     }
 }
 //
 void removeInd(Node*& head, size_t pos){
-    if(head->getLink() == NULL){removeHead(head);}
+    if(head->getLink() == NULL){removeHead(head);} // Check if there is only one node in the linked list. If there is, then delete this node.
 
-    if(head != NULL){
+    if(head != NULL){ // If the list is not empty, then begin iterating.
         Node* curr = head;
         Node* prev;
         size_t index = 0; 
-            while(curr->getLink() != NULL){
+            while(curr->getLink() != NULL){ // Iterate, and keep track of the node before.
                 prev = curr;
                 curr = curr->getLink();
             }
-            prev->setLink(curr->getLink());
-            delete curr;
+            prev->setLink(curr->getLink()); // Now that we are at the prevoious node before the deletion node, then link the previous node to one node after the deletion node.
+            delete curr; // Delete the deletion node.
         }
     }
 
 void remove(Node* prev){
-    Node* curr = prev ->getLink(); 
-    prev->setLink(curr->getLink()); 
-    delete curr; 
+    Node* curr = prev ->getLink(); // Set this node to the deletion node.
+    prev->setLink(curr->getLink()); // Set the node before the deletion node one after.
+    delete curr; // Delete the deletion node.
 }
 //
 void removeAll(Node*& head){
-    Node* curr = head->getLink();
+    Node* curr = head->getLink(); // Start one node after the head node.
     Node* freeMe; 
-    while(curr != NULL){ 
-        freeMe = curr; 
-        delete freeMe; 
-        curr = curr->getLink();     
+    while(curr != NULL){ // Begin iterating.
+        freeMe = curr; // Set a pointer to the current node we're at.
+        delete freeMe; // Delete the node.
+        curr = curr->getLink(); // Go on to the next node. 
     }   
-    head = NULL;
+    head = NULL; // Reset the head pointer to NULL.
 }
 
 void removeFromTo(Node*& head, size_t from, size_t to){
@@ -324,15 +324,15 @@ void swap(Node*& head, size_t pos){
     Node *N1, *N2; 
     Node* prev;
 
-    if((pos == 0)&&(head->getLink()!= NULL)){
-        N1 = head;
-        N2 = head->getLink();
-        N1->setLink(N2->getLink());
-        N2->setLink(N1);
-        head = N2;
+    if((pos == 0)&&(head->getLink()!= NULL)){ // When we only want to swap to items right next to each other.
+        N1 = head; // The first node is the head node.
+        N2 = head->getLink(); // The second node is linking to the node after the first node.
+        N1->setLink(N2->getLink()); // The first node is linking to the node after the second node.
+        N2->setLink(N1); // The second node is linking to the first node.
+        head = N2;  // The second node is now the head node.
     }
 
-    if((pos >=1) && (head->getLink()!= NULL)){
+    if((pos >=1) && (head->getLink()!= NULL)){ // If we want to swap nodes that are one node from each other.
     Node* curr = head; 
     pos1 = pos-1, pos2 = pos +1;
 
@@ -351,7 +351,7 @@ void swap(Node*& head, size_t pos){
 }
 
 //
-void swap(Node*& head, size_t posI, size_t posJ){
+void swap(Node*& head, size_t posI, size_t posJ){ // Swap nodes that are a certain amount nodes away from each other.
     Node* curr = head; 
     Node  *P1, *P2, *P3, *N1,*N2;
     size_t index = 0, pos1, pos2, pos3, pos4;
