@@ -1,40 +1,39 @@
 #include "hw3.h"
+
 //
 void insertHead(Node*& head, Node*& entry){
-    if(head == NULL){
-        head = entry;
-    }
-    else{
-        entry->setLink(head);
-        head = entry;
-    }
+    entry->setLink(head);
+    head = entry;
 }
 //
 void insertTail(Node*& head, Node*& entry){
     Node *curr = head;
-    if(head == NULL){
-    head = entry;
-    }
-    else{
+    if(head != NULL){
         while(curr->getLink() != NULL){ 
             curr = curr->getLink();
         }
+        entry->setLink(NULL);
         curr->setLink(entry);
-    }   
+    }
+    if(head == NULL){
+        entry->setLink(NULL);
+        head = entry;
+    }    
 }
 //
 void insertInd (Node*& head, Node*& entry, size_t pos){
     Node* curr = head;
     size_t index = 1;
-    if(head == NULL){
-        head = entry;
-    }
-    else{
+    if(head != NULL){
         while ((curr != NULL) && (index != pos)){
             curr = curr->getLink();
             index++;
         }
         insert(curr,entry); 
+    }
+
+    if(head == NULL){
+        head = entry;
     }
 }
 //
@@ -42,92 +41,110 @@ void insert(Node*  prev, Node*  entry){
     entry->setLink(prev->getLink());
     prev->setLink(entry);
 }
-
-
-//functions with given data only //
+//
 void insertHead(Node*& head, const Node::nodeDatatype& entry){
+    Node* newEntry = new Node(entry);
+    if(head != NULL){
+    newEntry->setLink(head);
+    }
+    head = newEntry;
+}
+//
+void insertTail(Node*& head, const Node::nodeDatatype& entry){
+    Node* newEntry = new Node(entry);
+    if(head != NULL){
+        Node* curr = head;
+        while(curr->getLink() != NULL){
+            curr = curr->getLink();
+        }
+        curr->setLink(newEntry);
+    }
+    if(head == NULL){
+        head = newEntry;
+    }
+}
+//
+void insertInd(Node*& head, const Node::nodeDatatype& entry,size_t pos){
+
+    if(head != NULL){
+        Node* curr = head;
+        size_t index = 1;
+
+        while((curr != NULL)&&(index != pos)){
+            curr = curr->getLink();
+            index++;
+        }
+
+        if(index == pos){
+            insert(curr,entry);
+        }     
+    }
+
     if(head == NULL){
         Node* newEntry = new Node(entry);
         head = newEntry;
     }
-    else{
-        Node* newEntry = new Node(entry,head); 
-        head = newEntry; 
-    }
     
-}
-//
-void insertTail(Node*& head, const Node::nodeDatatype& entry){
-    Node* curr = head;
-    Node newEntry(entry,NULL);
-    Node* newEntry_p = &newEntry;
-    while(curr->getLink() != NULL){
-        curr = curr->getLink();
-    }
-curr->setLink(newEntry_p);
-
-}
-//
-void insertInd(Node*& head, const Node::nodeDatatype& entry,size_t pos){
-    if(head == NULL){
-        Node* newEntry = new Node(entry,NULL);
-        head = newEntry;
-    }
-    else{
-        Node* curr = head;
-        size_t index = 1;
-
-        while((curr->getLink() != NULL)&&(index != pos)){
-            curr = curr->getLink();
-            index++;
-        }
-        if(index == pos-1){
-            Node* newEntry = new Node(entry,curr->getLink());
-            curr->setLink(newEntry);
-        }
-    }
 }
 //
 void insert(Node* prev, const Node::nodeDatatype& entry){
     Node* newEntry = new Node(entry, prev->getLink());
     prev->setLink(newEntry);
 }
+//
+bool isCycle(Node* head){
 
-//isCycle is OMMITED FOR NOW 
+    if(head->getLink() == NULL){return false;}
+        Node* start = head;
+        Node* curr = head;
 
- bool isCycle(Node* head){
-     return true;
+    while(curr != NULL){
+        if(curr = start){return true;}
+            curr = curr->getLink();
+    }
+
+    if(curr == NULL){return true;}
  }
 
-// When the list is empty, the head MUST point at NULL.
+//
 bool isEmpty(Node* head){
-return (head->getLink() == NULL);
+return (head == NULL);
 }
 
-// Checks if an index exists in a list
+//
 bool isValid(Node* head, size_t pos){
-    Node* curr = head;
+     Node* curr = head;
     size_t index = 0;
-    while(curr->getLink() !=NULL){
+
+    if((head == NULL)){return false;}
+
+    if((head->getLink() == NULL) && (pos == 0)){return true;}
+    
+    while((curr->getLink() != NULL) && (index != pos)){
         curr = curr->getLink();
         index++;
-        if(index == pos){return true;}
     }
-    return false; // If we have iterated throughout the entire list and we have not found the index pos.
+
+    if(index == pos){return true;}
+
+    if(index != pos){return false;}
+    
 }
 
-// Returns the length of the linked list ... NEED TO VERIFY
+//
 size_t length(Node* head){
+    if(head == NULL){return 0;}
     Node* curr = head;
     size_t index = 1;
+
     while(curr->getLink() != NULL){
         curr = curr->getLink();
         index++;
     }
-    return index;
+return index;
 }
 
-// Checks if a current node exists at a certain position
+
 Node* listLocate(Node* head, size_t position){
     Node* curr = head;
     size_t index = 0;
@@ -136,11 +153,11 @@ Node* listLocate(Node* head, size_t position){
         index++;
         if(index == position){return curr;}
     }
-    return NULL; // the position has not been found ... then return NULL.
+return NULL; 
 }
-// listLocate version 2, with const pointer 
+
 const Node* listLocate(const Node* head, size_t pos){
-    // We dereferenced the pointer, made a copy, and took its link, MUST START at 1
+
     Node headCopy =(*head);
     Node* curr = headCopy.getLink();
     size_t index = 1;
@@ -150,117 +167,127 @@ const Node* listLocate(const Node* head, size_t pos){
         index++;
         if(index == pos){return curr;}
     }
-    return NULL; // the position has not been found ... then return NULL.
+return NULL; 
 }
 
 
-// Searches the list for a specific data 
+ 
 Node* listSearch(Node* head, const Node::nodeDatatype& target){
-Node* curr = head;
-while(curr->getLink() != NULL){
-    if(curr->getData() == target){return curr;}
-    curr = curr->getLink();
+    Node* curr = head;
+    while(curr->getLink() != NULL){
+        if(curr->getData() == target){return curr;}
+            curr = curr->getLink();
+    }
+return NULL; 
 }
-return NULL; // when the list does not find the target data
-}
+
 // listSearch 2.0
 const Node* listSearch(const Node* head, const Node::nodeDatatype& target){
     const Node* curr = head;
     while(curr->getLink() != NULL){
         if(curr->getData() == target){return curr;}
-        curr = curr->getLink();
+            curr = curr->getLink();
     }
-    return NULL;
+return NULL;
 }
-
-
-
+//
 void removeHead(Node*& head){
-	Node* removeHead = head;
-    head = removeHead->getLink();
-    delete removeHead;
+    Node* freeMe;
+    freeMe =  head;
+    head = head->getLink();
+    delete freeMe;
 }
+//
 void removeTail(Node*& head){
-	Node* curr = head;
-	while(curr -> getLink() != NULL){ //looks through the list until it encounters null
-		curr = curr ->getLink();
-	}
-	delete curr;
-}
-void removeInd(Node*& head, size_t pos){
-    assert(pos != 0); // This function will work on anything besides the head because there is no way of getting the previous node before the HEAD!
-    Node* curr = head;
-    Node* prev;
-    size_t index = 0; // Used to keep track of the index we are currently in
-    while(curr->getLink() != NULL){
-        if(index == pos){ 
-            remove(prev);
-            break;
+
+    if(head->getLink() == NULL){removeHead(head);} // THIS TOOK ME VERY LONG TO FIGURE OUT ... but it was worth it, I learned something new.
+    else{
+        Node* curr = head;
+        Node* prev;
+
+        while(curr->getLink()!= NULL){
+            prev = curr;
+            curr = curr->getLink();
         }
-        prev = curr;
-        curr = curr->getLink();
-        index++;
+        prev->setLink(NULL);
+        delete curr;
     }
 }
-//You must know the node before the one you want to delete.
+//
+void removeInd(Node*& head, size_t pos){
+    if(head->getLink() == NULL){removeHead(head);}
 
+    if(head != NULL){
+        Node* curr = head;
+        Node* prev;
+        size_t index = 0; 
+            while(curr->getLink() != NULL){
+                prev = curr;
+                curr = curr->getLink();
+            }
+            prev->setLink(curr->getLink());
+            delete curr;
+        }
+    }
 
 void remove(Node* prev){
-    Node* curr = prev ->getLink(); // You set curr to the node you want to delete
-    prev -> setLink(curr->getLink()); // Set prev to the node that the delete node is looking at
-	delete curr; // This deleted the node marked for deletion.
+    Node* curr = prev ->getLink(); 
+    prev->setLink(curr->getLink()); 
+    delete curr; 
 }
+//
 void removeAll(Node*& head){
-    Node* curr = head;
-    Node* freeMe; // Temp storage for deleted node
-    while(curr != NULL){ // Goes through the entire loop and deletes each node
-        freeMe = curr; // Store the node marked for deletion
-        curr = curr->getLink(); // Move on t the next node
-        delete freeMe; //  Delete the node marked for deletion.
-        //NOTE: delete is faster than free()
-    }
+    Node* curr = head->getLink();
+    Node* freeMe; 
+    while(curr != NULL){ 
+        freeMe = curr; 
+        delete freeMe; 
+        curr = curr->getLink();     
+    }   
+    head = NULL;
 }
+
 void removeFromTo(Node*& head, size_t from, size_t to){
-Node* curr = head;
-Node* entryStore;
-Node* freeMe;
-size_t index = 0, 
-from1 = from -1; // from1 : the index of the node that is before the first deleted node
-while((curr != NULL)&&(index <= to)){ // .. NOT SURE IF DELETION IS INCLUSIVE OR NOT 
-    if(index == from1){
-        entryStore = curr; // Store the previous node that is being delete... this will be used to link the right most node after everything has been deleted.
-        curr = curr->getLink();
-    }
-    if (index > from ){ // reponsible for deleting the NODES 
-        freeMe = curr;
-        curr = curr->getLink();
-        delete freeMe;
-    }
-    index++;
-}
-entryStore->setLink(curr); // Links the left most node to the right most node;
+    Node* curr = head;
+    Node* entryStore;
+    Node* freeMe;
+    size_t index = 0, 
+    from1 = from -1;
+        while((curr != NULL)&&(index <= to)){ 
+            if(index == from1){
+                entryStore = curr; 
+            }
+            if (index > from ){ 
+            freeMe = curr;
+            curr = curr->getLink();
+            delete freeMe;
+            }
+            index++;
+        }
+    entryStore->setLink(curr); 
 }
 
 void removeHeadTo(Node*& head, size_t to){
     Node* curr = head;
     Node* freeMe;
     size_t index = 0;
-    while ((curr != NULL)&&(index <= to)){ // Only iterate up to the to position... that's what we care about being deleted 
+    while ((curr != NULL)&&(index <= to)){ 
         freeMe = curr;
         curr = curr->getLink();
         delete freeMe;
         index++;
     }
 }
+
 void removeToTail(Node*& head, size_t from){
     Node* curr = head;
-    Node* freeMe; // used to store the node we're deleting 
+    Node* freeMe; 
     size_t index = 0;
     while(curr != NULL){
-        if(index > from){ // onced we are greater than from .. we start deleting nodes 
-            freeMe = curr; // set deleted node to free me
-            curr = curr->getLink(); // move on to next node first!
-            delete freeMe; // delete the node
+        if(index > from){ 
+            freeMe = curr; 
+            curr = curr->getLink();
+            delete freeMe; 
         }
         else{
         curr = curr->getLink();
@@ -268,68 +295,85 @@ void removeToTail(Node*& head, size_t from){
         index++;
     }
 }
+//
+void reverse(Node*& head){
+    Node* prev = NULL;
+    Node* curr = head;
 
-//reverses the entire list
-void reverse(Node*& head){}
+    while(curr != NULL){
+        Node* next = curr->getLink();
+        curr->setLink(prev);
+        prev = curr;
+        curr = next;
+    }
+    head = prev;
+}
 
-// prints out the entire linked list
 void print(Node* head){
     Node* curr = head;
     while(curr != NULL){
-        cout<<curr->getData()<<"|\t";
+        cout<<curr->getData()<<"\t-->";
         curr = curr->getLink();
     }
+    cout<<" NULL\n";
 }
 
-// fixed
+//
 void swap(Node*& head, size_t pos){
-    Node* curr = head; // as always 
-    Node *N1, *N2; // Points to the nodes that must be swapped.
-    Node* prev; // STORES NODE BEFORE FIRST NODE "N1"
+    size_t pos1,pos2, index = 0; 
+    Node *N1, *N2; 
+    Node* prev;
 
-    size_t pos1 = pos-1, pos2 = pos +1, index = 0; 
-    // pos1 : index of node before first the first swapped "prev"
-    //pos: index of first node being swapped "N1"
-    // pos2 : index of second node being swapped "N2"
+    if((pos == 0)&&(head->getLink()!= NULL)){
+        N1 = head;
+        N2 = head->getLink();
+        N1->setLink(N2->getLink());
+        N2->setLink(N1);
+        head = N2;
+    }
+
+    if((pos >=1) && (head->getLink()!= NULL)){
+    Node* curr = head; 
+    pos1 = pos-1, pos2 = pos +1;
 
     while(index <= pos2){
-        // Conditions on setting up prev, N1, and N2
         if(index == pos1){ prev = curr;}
         if(index == pos) {  N1 = curr; }
         if(index == pos2){ N2 = curr;  }
         curr = curr->getLink();
         index++;
     }
+
     N1->setLink(N2->getLink());
     N2->setLink(N1);
-    prev->setLink(N2);
+    prev->setLink(N2);  
+    } 
 }
 
-//MUST TEST
+//
 void swap(Node*& head, size_t posI, size_t posJ){
     Node* curr = head; 
-    Node  *P1, *P2, *P3, *P4, *N1,*N2;
-    size_t index = 0, 
-    pos1 = posI - 1, 
-    pos2 = posI + 1,
-    pos3 = posJ - 1,
-    pos4 = posJ + 1;    
+    Node  *P1, *P2, *P3, *N1,*N2;
+    size_t index = 0, pos1, pos2, pos3, pos4;
 
-    while(index < pos4){
-        if(index == pos1){ P1 = curr;}
-        if(index == posI){ N1 = curr;}
-        if(index == pos2){ P2 = curr;}
-        if(index = pos3){ P3 = curr;}
-        if(index = posJ){ N2 = curr;}
-        if(index = pos4){ P4 = curr;}
-        curr = curr->getLink();
-        index++;
+    if((head->getLink()!= NULL) &&(posI == 0)){
+        swap(head,0);
     }
-    N1->setLink(P4);  
-    P3->setLink(N1);
 
-    N2->setLink(P2);
-    P1->setLink(N2);
+    if((head->getLink()!= NULL)&&(posI >=1)){
+        pos1 = posI - 1;
 
+        while(index <= posJ){
+            if(index == pos1){ P1 = curr;}
+            if(index == posI){ N1 = curr; }
+            if(index == posJ){ N2 = curr;}
 
+            curr = curr->getLink();
+            index++;
+        }
+        N1->setLink(N2->getLink());
+        N2->setLink(N1);
+        P1->setLink(N2); 
+    }
 }
+
