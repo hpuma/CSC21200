@@ -27,12 +27,12 @@ void Queue2Stack<Item>::pop(){
 		q2.pop();
 		used--;
 		size_t tempSize = q1.size();
-		for(size_t i = 0 ;  i < tempSize ; i++ ){
+		for(size_t i = 1 ;  i <= tempSize ; i++ ){
 			q2.push(q1.front());
 			q1.pop();
 		}
 		size_t secondStack  = q2.size() - 1;
-		for(size_t j = 0 ; j < secondStack; j++){
+		for(size_t j = 1 ; j <= secondStack; j++){
 			q1.push(q2.front());
 			q2.pop();
 		}
