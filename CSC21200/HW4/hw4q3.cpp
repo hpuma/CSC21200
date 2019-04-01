@@ -13,11 +13,16 @@ template <class Item>
 
 template <class Item>
 PriorityQueue<Item>::PriorityQueue(const PriorityQueue<Item>& source){
-    capacity = source.capacity;
-     data = new Item[source.capacity];
-     first = source.first;
-     last = source.last;
-     used = source.used;
+capacity = source.capacity;
+first = source.first;
+last = source.last;
+used = source.used;
+
+Item* newData = new Item[source.capacity];
+    for(size_t i = 0; i < source.used; i++){
+        newData[i] = source.data[i];
+    }
+data = newData;
 }
 
 template <class Item>
@@ -31,20 +36,26 @@ void PriorityQueue<Item>::push(const Item& entry){
         last = nextIndex(last);
         data[last] = entry;
         used++;   
+    } 
+    Item temp;
+    if(data[last] < data[first]){
+        temp = data[first];
+        data[first] = data[last];
+        data[last] = temp;
     }
-        Item temp;
-        for (size_t i = first ; i < last; i++){
-           if(data[i] < data[first]){
-               temp = data[first];
-               data[first] = data[i];
-               data[i] = temp;
-           }
-        }
 
 }
 
+
 template <class Item>
 void PriorityQueue<Item>::pop(){
+    Item temp;
+    if(data[last] < data[nextIndex(first)]){
+        temp = data[nextIndex(first)];
+        data[nextIndex(first)] = data[last];
+        data[last] = temp;
+    }
+
   if(!(empty())){
         first = nextIndex(first);
         used--;
@@ -52,7 +63,16 @@ void PriorityQueue<Item>::pop(){
 }
 template <class Item>
 void PriorityQueue<Item>::operator=(const PriorityQueue<Item>& source){
+    capacity = source.capacity;
+    first = source.first;
+    last = source.last;
+    used = source.used;
 
+    Item* newData = new Item[source.capacity];
+    for(size_t i = 0; i < source.used; i++){
+        newData[i] = source.data[i];
+    }
+    data = newData;
 }
 
 template <class Item>
