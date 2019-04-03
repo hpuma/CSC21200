@@ -1,20 +1,25 @@
-
 #ifndef __HW4Q1_CPP__
 #define __HW4Q1_CPP__
 #include "hw4q1.h"
 
+// WILL ADD COMMENTS
+template<class Item>
+ Stack<Item>::Stack(){
+     capacity = DEF_CAP;
+     data = new Item[capacity];
+     used = 0;
+ }
 
-  Stack();
 template <class Item>
  Stack<Item>::Stack(const Stack& source){
      capacity = source.capacity;
      used = source.used;
-     data = new Item[source.capacity];
+     Item* newData = new Item[capacity];
      for (size_t i = 0; i < used; i++){
-         data[i] = source.data[i];
+         newData[i] = source.data[i];
      }
+     data = newData;
  }
-
 
 template <class Item>
  Stack<Item>::~Stack(){
@@ -40,10 +45,11 @@ template <class Item>
 void Stack<Item>::operator=(const Stack<Item>& source){
     used = source.used;
     capacity = source.capacity;
-    data = new item[capacity];
+    Item* newData = new Item[capacity];
     for(size_t i = 0 ; i < used; i++){
-        data[i] = 
+        newData[i] = source.data[i];
     }
+    data = newData;
 
 }
 
