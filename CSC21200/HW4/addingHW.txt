@@ -1,2 +1,1 @@
 Homework 4 - CSC21200
-for the assignment operator test s1 it should be s2
