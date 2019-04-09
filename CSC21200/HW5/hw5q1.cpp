@@ -1,6 +1,6 @@
 #ifndef __BTNODE_CPP__
 #define __BTNODE_CPP__
-#include "btNode.h"
+#include "hw5q1.h"
 
 template <class Process, class Item>
 void btNode<Process, Item>::inorder(Process f, btNode<Item>* nodePtr){
