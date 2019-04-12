@@ -55,12 +55,20 @@
 //     with the given entry.
 //
 //   void removeLeft( )
-//     Precondition: size( ) > 0, and hasLeft( ) returns true.
+//     Precondition: size( ) > 0, hasLeft( ) returns true, and getLeft( )->isLeaf( ) return true.
 //     Postcondition: A left child has been removed from the "current node."
 //
 //   void removeRight( )
-//     Precondition: size( ) > 0, and hasRight( ) returns true.
+//     Precondition: size( ) > 0, hasRight( ) returns true, and getRight( )->isLeaf( ) return true.
 //     Postcondition: A right child has been removed from the "current node."
+//
+//   void setRoot(btNode<Item>* newRoot)
+//     Precondition: size( ) > 0.
+//     Postcondition: The root has been set to newRoot.
+//
+//   btNode<Item>* getNode( )
+//     Precondition: size( ) > 0.
+//     Postcondition: The return value is the btNode from the "current node."
 //
 // CONSTANT MEMBER FUNCTIONS for the binaryTree<Item> template class:
 //   size_t size( ) const
@@ -96,7 +104,6 @@
 
 #include <cassert>    // Provides assert
 #include <cstdlib>    // Provides size_t
-#include <stack>      // Provides stack
 #include "hw5q1.h"    // Provides btNode<Item> template class
 
 using namespace std;
@@ -120,6 +127,8 @@ public:
     void addRight(const Item& entry);
     void removeLeft( );
     void removeRight( );
+    void setRoot( btNode<Item>* newRoot );
+    btNode<Item>* getNode( );
     // CONSTANT MEMBER FUNCTIONS
     size_t size( ) const;
     Item retrieve( ) const;
@@ -132,5 +141,5 @@ private:
     size_t count;
 };
 
-#include "btClass.cpp" 
+#include "hw5q2.cpp" 
 #endif 

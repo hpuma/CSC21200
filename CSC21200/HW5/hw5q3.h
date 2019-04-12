@@ -39,7 +39,11 @@
 //     Postcondition: The "current node" been shifted down to the right child
 //     of the original current node.
 //
-//   void change(const Item& new_entry)
+//   void shiftInd(const size_t& ind)
+//     Precondition: size( ) > 0 and size( ) < ind.
+//     Postcondition: The "current node" been shifted to the index.
+//
+//   void change(const Item& newEntry)
 //     Precondition: size( ) > 0.
 //     Postcondition: The data at the "current node" has been changed to the
 //     new entry.
@@ -53,6 +57,14 @@
 //     Precondition: size( ) > 0, and hasRight( ) returns false.
 //     Postcondition: A right child has been added to the "current node,"
 //     with the given entry.
+//
+//   void removeLeft( )
+//     Precondition: size( ) > 0, hasLeft( ) returns true, and getLeft( )->isLeaf( ) return true.
+//     Postcondition: A left child has been removed from the "current node."
+//
+//   void removeRight( )
+//     Precondition: size( ) > 0, hasRight( ) returns true, and getRight( )->isLeaf( ) return true.
+//     Postcondition: A right child has been removed from the "current node."
 //
 // CONSTANT MEMBER FUNCTIONS for the binaryTree<Item> template class:
 //   size_t size( ) const
@@ -83,34 +95,36 @@
 //   createFirstNode, addLeft, addRight, the copy constructor, and the 
 //   assignment operator.
 
-#ifndef __BT_CLASS_H__
-#define __BT_CLASS_H__
+#ifndef __BT_CLASS_DA_H__
+#define __BT_CLASS_DA_H__
 
 #include <cassert>    // Provides assert
 #include <cstdlib>    // Provides size_t
-#include <stack>      // Provides stack
-
+#include <cmath>      // Provides floor
 
 using namespace std;
 
 template <class Item>
-class binaryTree
+class binaryTreeDA
 {
 public:
     const size_t DEF_CAP = 30;
     // CONSTRUCTORS and DESTRUCTOR
-    binaryTree( );
-    binaryTree(const binaryTree& source);
-    ~binaryTree( );
+    binaryTreeDA( );
+    binaryTreeDA(const binaryTreeDA& source);
+    ~binaryTreeDA( );
     // MODIFICATION MEMBER FUNCTIONS
     void createFirstNode(const Item& entry);
     void shiftToRoot( );
     void shiftUp( );
     void shiftLeft( );
     void shiftRight( );
+    void shiftInd(const size_t& ind);
     void change(const Item& newEntry);
     void addLeft(const Item& entry);
     void addRight(const Item& entry);
+    void removeLeft( );
+    void removeRight( );
     // CONSTANT MEMBER FUNCTIONS
     size_t size( ) const;
     Item retrieve( ) const;
@@ -124,5 +138,5 @@ private:
     size_t capacity;
 };
 
-#include "btClass.cpp" 
+#include "hw5q3.cpp" 
 #endif 
