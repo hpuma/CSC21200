@@ -45,7 +45,7 @@ void print(btNode<Item>* nodePtr, SizeType depth){
 
 template<class Item> 
 void clearTree(btNode<Item>*& rootPtr){
-    if(nodePtr == NULL){ 
+    if(rootPtr == NULL){ 
         return;
     }  
     btNode<Item>* child;

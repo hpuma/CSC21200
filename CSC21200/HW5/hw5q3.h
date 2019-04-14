@@ -35,7 +35,7 @@
 //     of the original current node.
 //
 //   void shiftRight( )
-//     Precondition: hasRight( ) rloves myra turns true.
+//     Precondition: hasRight( ) returns true.
 //     Postcondition: The "current node" been shifted down to the right child
 //     of the original current node.
 //
