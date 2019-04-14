@@ -2,15 +2,19 @@
 #define __BT_CLASS_CPP__
 #include "hw5q2.h"
 
+//CONSTRUCTOR
 template<class Item>
 binaryTree<Item>::binaryTree(){
 
 }
 
+//COPY CONSTRUCTOR
 template<class Item>
 binaryTree<Item>::binaryTree(const binaryTree& source){
 
 }
+
+//DESTRUCTOR
 template<class Item>
 binaryTree<Item>::~binaryTree(){
 
@@ -96,8 +100,5 @@ template<class Item>
 bool binaryTree<Item>::hasRight() const{
 
 }
-
-
-
 
 #endif
