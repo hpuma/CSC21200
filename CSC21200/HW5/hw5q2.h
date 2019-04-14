@@ -102,7 +102,11 @@
 #ifndef __BT_CLASS_H__
 #define __BT_CLASS_H__
 
+#include <iostream>
 #include <cassert>    // Provides assert
+#include <cctype>
+#include <cmath>      // Provides floor
+#include <cstdio>
 #include <cstdlib>    // Provides size_t
 #include "hw5q1.h"    // Provides btNode<Item> template class
 

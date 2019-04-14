@@ -8,10 +8,12 @@
 // Try not to change this file
 
 #include <iostream>
-#include <cstdlib>
-#include <cassert>
+#include <cassert>    // Provides assert
+#include <cctype>
+#include <cmath>      // Provides floor
+#include <cstdio>
+#include <cstdlib>    // Provides size_t
 #include <climits>
-#include <cmath>
 
 using namespace std;
 

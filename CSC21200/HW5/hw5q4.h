@@ -8,8 +8,11 @@
 // Try not to change this file
 
 #include <iostream>
-#include <cstdlib>
-#include <cassert>
+#include <cassert>    // Provides assert
+#include <cctype>
+#include <cmath>      // Provides floor
+#include <cstdio>
+#include <cstdlib>    // Provides size_t
 #include "hw5q2.h"
 
 using namespace std;

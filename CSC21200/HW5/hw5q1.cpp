@@ -70,7 +70,6 @@ btNode<Item>* copyTree(const btNode<Item>* rootPtr){
     parentCopy = copyTree(rootPtr);
     return new btNode<Item>(rootPtr->getData(),leftCopy, rightCopy,parentCopy);
     }
-}
 
 template<class Item> 
 size_t treeSize(const btNode<Item>* nodePtr){

@@ -1,6 +1,7 @@
 #ifndef __BT_CLASS_CPP__
 #define __BT_CLASS_CPP__
 #include "hw5q2.h"
+
 template<class Item>
 binaryTree<Item>::binaryTree(){
 
@@ -49,17 +50,17 @@ void binaryTree<Item>::addLeft(const Item& entry){
 }
 
 template<class Item>
-binaryTree<Item>::addRight(const Item& entry){
+void binaryTree<Item>::addRight(const Item& entry){
 
 }
 
 template<class Item>
-binaryTree<Item>::removeLeft(){
+void binaryTree<Item>::removeLeft(){
 
 }
 
 template<class Item>
-binaryTree<Item>::removeRight(){
+void binaryTree<Item>::removeRight(){
 
 }
 template<class Item>
