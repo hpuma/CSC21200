@@ -65,8 +65,8 @@ btNode<Item>* copyTree(const btNode<Item>* rootPtr){
     btNode<Item>* leftCopy;
     btNode<Item>* rightCopy;
     btNode<Item>* parentCopy;
-    leftChild = copyTree(rootPtr->getLeft());
-    rightChild = copyTree(rootPtr->getRight());
+    leftCopy= copyTree(rootPtr->getLeft());
+    rightCopy = copyTree(rootPtr->getRight());
     parentCopy = copyTree(rootPtr);
     return new btNode<Item>(rootPtr->getData(),leftCopy, rightCopy,parentCopy);
     }
