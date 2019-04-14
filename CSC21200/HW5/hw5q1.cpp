@@ -4,12 +4,10 @@
 
 /*Left Child: Parent Node: Right Child*/
 template<class Process, class Item>
-void inorder(Process f, btNode<Item>* nodePtr){
-       
+void inorder(Process f, btNode<Item>* nodePtr){ 
         inorder(f,nodePtr->getLeft());
         f(nodePtr->getData());
         inorder(f,nodePtr->getLeft());
-    
 }
 
 /*Parent Node: Left Child : Right Child */
@@ -21,7 +19,6 @@ void preorder(Process f, btNode<Item>* nodePtr){
     f(nodePtr->getData());
     preorder(f,nodePtr->getLeft());
     preorder(f,nodePtr->getRight()); 
-    
 }
 
 /*Left Child: Right Child : Parent Node */
@@ -32,8 +29,7 @@ void postorder(Process f, btNode<Item>* nodePtr){
     }  
     postOrder(f,nodePtr->getLeft());
     postOrder(f,nodePtr->getRight());
-    f(nodePtr->getData());
-    
+    f(nodePtr->getData());    
 }
 
 template<class Item, class SizeType> 
@@ -44,8 +40,7 @@ void print(btNode<Item>* nodePtr, SizeType depth){
     print(nodePtr->getLeft(), depth+1);
     cout<<setw(4*depth)<<"";
     cout<<nodePtr->getData()<<"\n";
-    print(nodePtr->getRight(), depth+1);
-    
+    print(nodePtr->getRight(), depth+1);   
 }
 
 template<class Item> 
@@ -72,6 +67,7 @@ btNode<Item>* copyTree(const btNode<Item>* rootPtr){
     btNode<Item>* parentCopy;
     leftChild = copyTree(rootPtr->getLeft());
     rightChild = copyTree(rootPtr->getRight());
+    parentCopy = copyTree(rootPtr);
     return new btNode<Item>(rootPtr->getData(),leftCopy, rightCopy,parentCopy);
     }
 }
