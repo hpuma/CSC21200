@@ -97,10 +97,12 @@
 
 #ifndef __BT_CLASS_DA_H__
 #define __BT_CLASS_DA_H__
-
+#include <iostream>
 #include <cassert>    // Provides assert
-#include <cstdlib>    // Provides size_t
+#include <cctype>
 #include <cmath>      // Provides floor
+#include <cstdio>
+#include <cstdlib>    // Provides size_t
 
 using namespace std;
 
