@@ -5,9 +5,12 @@
 /*Left Child: Parent Node: Right Child*/
 template<class Process, class Item>
 void inorder(Process f, btNode<Item>* nodePtr){ 
+    if(nodePtr == NULL){
+        return;
+    }
         inorder(f,nodePtr->getLeft());
         f(nodePtr->getData());
-        inorder(f,nodePtr->getLeft());
+        inorder(f,nodePtr->getRight());
 }
 
 /*Parent Node: Left Child : Right Child */
@@ -36,11 +39,20 @@ template<class Item, class SizeType>
 void print(btNode<Item>* nodePtr, SizeType depth){
     if(nodePtr == NULL){ 
         return;
-    }      
-    print(nodePtr->getLeft(), depth+1);
-    cout<<setw(4*depth)<<"";
-    cout<<nodePtr->getData()<<"\n";
-    print(nodePtr->getRight(), depth+1);   
+    } 
+     cout<<setw(4*depth)<<"";
+     if(nodePtr == NULL){
+        cout<<"Empty\n";
+     }  
+     else if(nodePtr->isLeaf()){
+        cout<<nodePtr->getData()<<"LEAF\n";
+     }  
+     else{
+        cout<<nodePtr->getData()<<"\n";
+        print(nodePtr->getLeft(), depth+1);
+        print(nodePtr->getRight(), depth+1);   
+     } 
+    
 }
 
 template<class Item> 
@@ -48,11 +60,10 @@ void clearTree(btNode<Item>*& rootPtr){
     if(rootPtr == NULL){ 
         return;
     }  
-    btNode<Item>* child;
-    child = rootPtr->getLeft();
-    clearTree(child);
-    child = rootPtr->getRight();
-    clearTree(child);
+    btNode<Item>* leftChild = rootPtr->getLeft();
+    btNode<Item>* rightChild = rootPtr->getRight();
+    clearTree(leftChild);
+    clearTree(rightChild);
     delete rootPtr;
     rootPtr = NULL;
 }
@@ -62,13 +73,9 @@ btNode<Item>* copyTree(const btNode<Item>* rootPtr){
     if(rootPtr == NULL){
         return NULL;
     }
-    btNode<Item>* leftCopy;
-    btNode<Item>* rightCopy;
-    btNode<Item>* parentCopy;
-    leftCopy= copyTree(rootPtr->getLeft());
-    rightCopy = copyTree(rootPtr->getRight());
-    parentCopy = copyTree(rootPtr);
-    return new btNode<Item>(rootPtr->getData(),leftCopy, rightCopy,parentCopy);
+    btNode<Item>* leftCopy = copyTree(rootPtr->getLeft());
+    btNode<Item>* rightCopy = copyTree(rootPtr->getRight()); 
+    return new btNode<Item>(rootPtr->getData(),leftCopy, rightCopy);
     }
 
 template<class Item> 
