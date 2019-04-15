@@ -6,7 +6,7 @@
 template<class Item>
 binaryTree<Item>::binaryTree(){
     root = NULL;
-    curr = NULL;
+    curr = root;
     count = 0;
 }
 
@@ -23,7 +23,7 @@ template<class Item>
 binaryTree<Item>::~binaryTree(){
     clearTree(root);
     count = 0;
-    curr = root;
+    curr = NULL;
 }
 
 template<class Item>
@@ -74,7 +74,7 @@ void binaryTree<Item>::change(const Item& newEntry){
 template<class Item>
 void binaryTree<Item>::addLeft(const Item& entry){
     if((size() > 0) && (!hasLeft())){
-        btNode<Item>* newLeft(entry);
+        btNode<Item>* newLeft = new btNode<Item>(entry);
         newLeft->setParent(curr);
         curr->setLeft(newLeft);
         count++;
@@ -84,7 +84,7 @@ void binaryTree<Item>::addLeft(const Item& entry){
 template<class Item>
 void binaryTree<Item>::addRight(const Item& entry){
     if((size() > 0) && (!hasRight())){
-        btNode<Item>* newRight(entry);
+        btNode<Item>* newRight = new btNode<Item>(entry);
         newRight->setParent(curr);
         curr->setRight(newRight);
         count++;
@@ -154,7 +154,7 @@ size_t binaryTree<Item>::size() const{
 
 template<class Item>
 Item binaryTree<Item>::retrieve() const{
-    return curr->getData();
+    return (curr->getData());
 }
 
 template <class Item> 
