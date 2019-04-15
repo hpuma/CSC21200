@@ -95,7 +95,7 @@ template<class Item>
 void binaryTree<Item>::removeLeft(){
     /*NOTE: You must take into consideration if the left node is a leaf. In this case
     we are not required to check if it is a leaf*/
-    if((size() > 0 && hasLeft()) &&(getLeft()->isLeaf())){
+    if((size() > 0 && hasLeft()) &&(curr->getLeft()->isLeaf())){
         btNode<Item>* deleteMe = curr->getLeft();
         delete deleteMe;
         curr->setLeft(NULL);
@@ -107,7 +107,7 @@ template<class Item>
 void binaryTree<Item>::removeRight(){
     /*NOTE: You must take into consideration if the right node is a leaf. In this case
     we are not required to check if it is a leaf*/
-    if((size() > 0 && hasRight()) && (getRight()->isLeaf())){
+    if((size() > 0 && hasRight()) && ( curr->getRight()->isLeaf())){
         btNode<Item>* deleteMe = curr->getRight();
         delete deleteMe;
         curr->setRight(NULL);
