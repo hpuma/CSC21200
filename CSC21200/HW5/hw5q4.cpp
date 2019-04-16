@@ -7,7 +7,7 @@ template <class Item>
 BST<Item>::BST(){
 	count = 0;
 }
-
+//FROM BOOK, PAGE 553
 template <class Item>
 void BST<Item>::insert(const Item& entry){
 	if(tree.size() == 0 ){
@@ -15,28 +15,31 @@ void BST<Item>::insert(const Item& entry){
 	}
 	else{
 		tree.shiftToRoot();
+		btNode<Item>* curr = tree.getNode();
 		btNode<Item>* newNode = new btNode<Item>(entry);
-		btNode<Item>* prevNode;
-		while(tree.getNode() != NULL){
-			prevNode = tree.getNode();
-			if(tree.retrieve() < entry){
-				tree.shiftLeft();
-			}
-			else{
-				tree.shiftRight();
-			}	
-		}
-		newNode->setParent(prevNode);
-		if(tree.getNode() == NULL){
-			tree.createFirstNode(entry);
-		}
-		else if(entry < prevNode->getData()){
-			prevNode->setLeft(newNode);
-		}
-		else{
-			prevNode->setRight(newNode);
-		}
+		bool done = false;
 
+		while(!done){
+			if(curr->getData() >= entry){
+				if(curr->getLeft() == NULL){
+					curr->setLeft(newNode);
+					done = true;
+				}
+				else if(curr->getLeft() != NULL){
+					curr = curr->getLeft();
+				}
+			}
+			if(curr->getData() <= entry){
+				if(curr->getRight() == NULL){
+					curr->setRight(newNode);
+					done = true;
+				}
+				else if(curr->getRight() != NULL){
+					curr = curr->getRight();
+				}
+			}
+			
+		}
 	}
 	count++;
 }
@@ -65,26 +68,42 @@ void BST<Item>::transplant(btNode<Item>*& u, btNode<Item>*& v){
 
 template <class Item>
 btNode<Item>* BST<Item>::minimum(){
-return NULL;
+	tree.shiftToRoot();
+	btNode<Item>* curr = tree.getNode();
+
+	while(!curr->isLeaf()){
+		curr = curr->getLeft();
+	}
+	return curr;
 }
 
 template <class Item>
 btNode<Item>* BST<Item>::maximum(){
-return NULL;
+	tree.shiftToRoot();
+	btNode<Item>* curr = tree.getNode();
+
+	while(!curr->isLeaf()){
+		curr = curr->getRight();
+	}
+	return curr;
 }
+//BOOK PAGE 555
 template <class Item>
 btNode<Item>*  BST<Item>::search(const Item& target){
-	if((tree.getNode() != NULL) && (tree.retrieve() == target)){
-		return (tree.getNode());
+	tree.shiftToRoot();
+	btNode<Item>* curr = tree.getNode();
+	while(!curr->isLeaf()){
+		if((curr != NULL) && (curr->getData() == target)){
+			return (curr);
+		}
+		if(target < curr->getData()){
+			curr = curr->getLeft();
+		}
+		else{
+			curr = curr->getRight();
+		}
 	}
-	if(target < tree.retrieve()){
-		tree.shiftLeft();
-		return search(target);
-	}
-	else{
-		tree.shiftRight();
-		return search(target);
-	}
+	return NULL;
 }
 
 
