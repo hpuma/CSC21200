@@ -95,7 +95,7 @@ Item Heap<Item>::minimum(){
 		numNodes+=pow(2,i);
 	}
 	for (size_t j = 0 ; j < numNodes ; j++){ // Iterates rough the tree and its children.
-		if(data[j] < minVal){
+		if(data[j] < minimumVal){
 			minimumVal = data[j];
 		}
 		if (data[left(j)] < minimumVal){
