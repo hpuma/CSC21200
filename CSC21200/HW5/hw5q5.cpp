@@ -88,7 +88,7 @@ Item Heap<Item>::minimum(){
 	Item minimumVal = INT_MAX; // Used to compare for min value.
 	size_t newDepth = 0; // The depth - 1, we want to iterate up to the nodes in this depth.
 	size_t numNodes = 0; // The amount of nodes we are going to iterate through
-	if(count > 1){ // When the depth is not 1. Depth 1 is a special case.
+	if(count > 1){ // When the depth is not 0. Depth 1 is a special case.
 		newDepth = floor(log2(count)) - 1;
 	}
 	for (size_t i = 0 ; i <= newDepth; i++){ // Computes the amount of Nodes we are going to iterate through.
