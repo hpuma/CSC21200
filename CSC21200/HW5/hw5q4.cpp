@@ -2,7 +2,6 @@
 #define __BST_CPP__
 #include "hw5q4.h"
 
-
 template <class Item>
 BST<Item>::BST(){
 	count = 0;
@@ -15,29 +14,26 @@ void BST<Item>::insert(const Item& entry){
 	}
 	else{
 		tree.shiftToRoot(); // Move the tree pointer to the root.
-		btNode<Item>* curr = tree.getNode(); // Set a pointer to the root node;
-		btNode<Item>* newNode = new btNode<Item>(entry); // Create a node with entry.
 		bool done = false; // Boolean determining if the node has been inserted.
-
 		while(!done){ // While the node has not been inserted.
 
-			if(curr->getData() >= entry){  // If entry is less than the current node.
-				if(curr->getLeft() == NULL){ // If the left node is empty.
-					curr->setLeft(newNode); // Add the new node with the entry.
+			if(tree.retrieve() >= entry){  // If entry is less than the current node.
+				if(!tree.hasLeft()){ // If the left node is empty.
+					tree.addLeft(entry); // Add the new node with the entry.
 					done = true;	// Node has been added .. done = true.
 				}
-				else if(curr->getLeft() != NULL){ //If there is a left node.
-					curr = curr->getLeft();	// Keep going left.
+				else if(tree.hasLeft()){ //If there is a left node.
+					tree.shiftLeft();	// Keep going left.
 				}
 			}
 
-			if(curr->getData() <= entry){ // If entry is greater than the current node.
-				if(curr->getRight() == NULL){ // If the right node is empty.
-					curr->setRight(newNode); // Add the newNode.
+			if(tree.retrieve() <= entry){ // If entry is greater than the current node.
+				if(!tree.hasRight()){ // If the right node is empty.
+					tree.addRight(entry); // Add the newNode.
 					done = true;	// Node has been added, set done = true.
 				}
-				else if(curr->getRight() != NULL){ // If there is a right node already.
-					curr = curr->getRight(); // Keep going left.
+				else if(tree.hasRight()){ // If there is a right node already.
+					tree.shiftRight(); // Keep going left.
 				}
 			}
 		}
@@ -62,28 +58,24 @@ void BST<Item>::remove(const Item& target){
 	}
 
 	if(tree.retrieve() == target){
-		btNode<Item> deleteMe;
 		if(!tree.hasLeft()){
-			deleteMe = tree.getNode();
 			transplant(tree.getNode(),tree.getRight());
-			delete deleteMe;
+			delete tree.getNode();
 		}
 		else{
 			if(tree.getRight() == NULL){
-				deleteMe = tree.Node();
 				tree.setRoot(tree.getLeft());
-				delete deleteMe;
+				delete tree.getNode();
 			}
 			else if(tree.getRight() != NULL){
-				btNode<Item>* curr = tree.getNode();
-				while(!curr->isLeaf()){
-					curr = curr->getRight();
+				
+				while(!(!tree.hasLeft() && !tree.hasRight())){
+					tree.shiftRight();
 				}
-				delete curr;
+				delete tree.getNode();
 			}
 		}
 	}
-
 }
 
 template <class Item>
@@ -102,46 +94,38 @@ void BST<Item>::transplant(btNode<Item>*& u, btNode<Item>*& v){
 	}
 }
 
-
 template <class Item>
 btNode<Item>* BST<Item>::minimum(){
 	tree.shiftToRoot();
-	btNode<Item>* curr = tree.getNode();
-
-	while(!curr->isLeaf()){
-		curr = curr->getLeft();
+	while(tree.hasLeft()){
+		tree.shiftLeft();
 	}
-	return curr;
+	return tree.getNode();
 }
 
 template <class Item>
 btNode<Item>* BST<Item>::maximum(){
 	tree.shiftToRoot();
-	btNode<Item>* curr = tree.getNode();
-
-	while(!curr->isLeaf()){
-		curr = curr->getRight();
+	while(tree.hasRight()){
+		tree.shiftRight();
 	}
-	return curr;
+	return tree.getNode();
 }
 //BOOK PAGE 555
 template <class Item>
 btNode<Item>*  BST<Item>::search(const Item& target){
 	tree.shiftToRoot();
-	btNode<Item>* curr = tree.getNode();
-	while(!curr->isLeaf()){
-		if((curr != NULL) && (curr->getData() == target)){
-			return (curr);
+	while(!(!tree.hasLeft() && !tree.hasRight())){
+		if((tree.getNode() != NULL) && (tree.retrieve() == target)){
+			return tree.getNode();
 		}
-		if(target < curr->getData()){
-			curr = curr->getLeft();
+		if(target < tree.retrieve()){
+			tree.shiftLeft();
 		}
 		else{
-			curr = curr->getRight();
+			tree.shiftRight();
 		}
 	}
 	return NULL;
 }
-
-
 #endif
