@@ -48,7 +48,7 @@ private:
     size_t count;
     size_t capacity;
 
-    size_t parent(size_t i) {return floor(i/2);}
+    size_t parent(size_t i) {return floor((i-1)/2);}
     size_t left  (size_t i) {return 2*i+1;}
     size_t right (size_t i) {return 2*i+2;}
 };
