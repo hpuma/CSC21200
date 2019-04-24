@@ -33,8 +33,6 @@ binaryTreeDA<Item>::~binaryTreeDA(){
 	curr = -1;
 }
 
-
-
 template<class Item>
 void binaryTreeDA<Item>::createFirstNode(const Item& entry){
     //Might need checking for preconditions.
@@ -44,7 +42,6 @@ void binaryTreeDA<Item>::createFirstNode(const Item& entry){
         curr = 0;
     }
 }
-
 
 template<class Item>
 void binaryTreeDA<Item>::shiftToRoot(){
@@ -56,7 +53,6 @@ void binaryTreeDA<Item>::shiftUp(){
     if(hasParent()){
         curr = floor((curr-1)/2); // Formula for the index of the parent node;
     }
-
 }
 
 template<class Item>
@@ -107,7 +103,6 @@ void binaryTreeDA<Item>::addRight(const Item& entry){
     }
 }
 
-
 template<class Item>
 void binaryTreeDA<Item>::removeLeft(){
     if((count > 0) && (hasLeft())){
@@ -116,7 +111,6 @@ void binaryTreeDA<Item>::removeLeft(){
         count--;
     }
 }
-
 
 template<class Item>
 void binaryTreeDA<Item>::removeRight(){
@@ -154,7 +148,5 @@ template<class Item>
 bool binaryTreeDA<Item>::hasRight() const{
     return ((2*curr) + 2 < count);  
 }
-
-
 
 #endif

@@ -11,22 +11,22 @@ Heap<Item>::Heap(){
 
 template<class Item>
 void Heap<Item>::increaseKey(size_t i, const Item& entry){
-	assert(getCount() > 0);
+	assert(getCount() > 0); // Make sure that the tree is not empty.
 
-	if(entry > data[i]){
-		data[i] = entry;
-		maxHeapify(i);	
+	if(entry > data[i]){ // Make sure that the entry is greater than the current key.
+		data[i] = entry; // Change the key to entry
+		maxHeapify(i); // Restore the Max heap property.	
 	}
 }
 
 template<class Item>
 Item Heap<Item>::removeMax(){
-	assert(getCount() > 0);
-	Item maxItem = data[0];
-	data[0] = data[getCount()-1];
+	assert(getCount() > 0); //Make sure the heap is not empty.
+	Item maxItem = data[0]; // Store the root value.
+	data[0] = data[getCount()-1]; // Move the last item in the dynamic array data to the head.
 	count--;
-	maxHeapify(0);
-	return maxItem;
+	maxHeapify(0); // Restore the maxHeap property from the root again.
+	return maxItem; // Return the value that was stored at the root of the tree.
 }
 
 template<class Item>
@@ -95,13 +95,18 @@ Item Heap<Item>::minimum(){
 		numNodes+=pow(2,i);
 	}
 	for (size_t j = 0 ; j < numNodes ; j++){ // Iterates rough the tree and its children.
-		if(data[j] < minimumVal){
+		
+		if(data[left(j)] == NULL){ //If the left child is Empty, then stop because the tree is NOT complete.
+			 break;
+		}
+
+		if(data[j] < minimumVal){ // Compare the current node.
 			minimumVal = data[j];
 		}
-		if (data[left(j)] < minimumVal){
+		if (data[left(j)] < minimumVal){ //Compare left child data.
 			minimumVal = data[left(j)];
 		}
-		if(data[right(j)] < minimumVal){
+		if(data[right(j)] < minimumVal){// Compare the right child data.
 			minimumVal = data[right(j)];
 		}
 	}

@@ -5,19 +5,17 @@
 //CONSTRUCTOR
 template<class Item>
 binaryTree<Item>::binaryTree(){
-    root = NULL;
-    curr = root;
-    count = 0;
+    root = NULL; // Root pointer doesnt's point to anything.
+    curr = root; // Curr pointer points to the same thing that the root pointer is pointing to.
+    count = 0; // The Tree is currently empty, so set the count to 0.
 }
-
 //COPY CONSTRUCTOR
 template<class Item>
 binaryTree<Item>::binaryTree(const binaryTree& source){
-    root = copyTree(source.root);
-    count = source.size();
-    curr = root;
+    root = copyTree(source.root); // Use the function from the btNode toolkit.
+    count = source.size(); // use the get function to get the size from the source binary tree.
+    curr = root; // Set the current pointer to the root of the tree.
 }
-
 //DESTRUCTOR
 template<class Item>
 binaryTree<Item>::~binaryTree(){
@@ -28,55 +26,54 @@ binaryTree<Item>::~binaryTree(){
 
 template<class Item>
 void binaryTree<Item>::createFirstNode(const Item& entry){
-    if(size() == 0){
-        root = new btNode<Item>(entry);
-        curr = root;
+    if(size() == 0){ // Make sure that the tree is empty if you are going to insert the very first node.
+        root = new btNode<Item>(entry); // Make the root point to a node that contains entry.
+        curr = root; // Make the current pointer point to the root since this is the first entry.
         count++;
     }
 }
 
 template<class Item>
 void binaryTree<Item>::shiftToRoot(){
-    if(size() > 0){
-        curr = root;
+    if(size() > 0){ // Make sure that the tree isn't empty.
+        curr = root; // Set the current pointer to the root.
     }
-
 }
 
 template<class Item>
 void binaryTree<Item>::shiftUp(){
     if(hasParent()){
-        curr = curr->getParent();
+        curr = curr->getParent(); // Move the current pointer to the parent of the current node.
     }
 }
 
 template<class Item>
 void binaryTree<Item>::shiftLeft(){
     if(hasLeft()){
-        curr = curr->getLeft();
+        curr = curr->getLeft(); // Move the current pointer to the left child of the current node.
     }
 }
 
 template<class Item>
 void binaryTree<Item>::shiftRight(){
     if(hasRight()){
-        curr = curr->getRight();
+        curr = curr->getRight(); // Move the current pointer to the right child of the current node.
     }
 }
 
 template<class Item>
 void binaryTree<Item>::change(const Item& newEntry){
     if(size() > 0){
-        curr->setData(newEntry);
+        curr->setData(newEntry); // Change the entry of the current node that we're pointing to with the curr pointer.
     }
 }
 
 template<class Item>
 void binaryTree<Item>::addLeft(const Item& entry){
-    if((size() > 0) && (!hasLeft())){
-        btNode<Item>* newLeft = new btNode<Item>(entry);
-        newLeft->setParent(curr);
-        curr->setLeft(newLeft);
+    if((size() > 0) && (!hasLeft())){ // Make sure the tree is not empty AND that there isn't a left node already.
+        btNode<Item>* newLeft = new btNode<Item>(entry); // Allocate a new node with the entrys.
+        newLeft->setParent(curr); // Make sure that the new node sets the current node as its parent
+        curr->setLeft(newLeft); // Set the new Node as the left child of the current node.
         count++;
     }
 }

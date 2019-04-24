@@ -2,10 +2,12 @@
 #define __BST_CPP__
 #include "hw5q4.h"
 
+//CONSTRUCTOR
 template <class Item>
 BST<Item>::BST(){
 	count = 0;
 }
+
 //FROM BOOK, PAGE 553
 template <class Item>
 void BST<Item>::insert(const Item& entry){
@@ -43,11 +45,12 @@ void BST<Item>::insert(const Item& entry){
 // On Bottom of page 555
 template <class Item>
 void BST<Item>::remove(const Item& target){
+	assert(count > 0);
 	tree.shiftToRoot();
+
 	if(tree.retrieve() == NULL){
 		return;
 	}
-	
 	if(tree.retrieve() > target){
 		tree.shiftLeft();
 		remove(target);
@@ -56,7 +59,6 @@ void BST<Item>::remove(const Item& target){
 		tree.shiftRight();
 		remove(target);
 	}
-
 	if(tree.retrieve() == target){
 		if(!tree.hasLeft()){
 			transplant(tree.getNode(),tree.getRight());
@@ -96,6 +98,7 @@ void BST<Item>::transplant(btNode<Item>*& u, btNode<Item>*& v){
 
 template <class Item>
 btNode<Item>* BST<Item>::minimum(){
+	assert(count > 0);
 	tree.shiftToRoot();
 	while(tree.hasLeft()){
 		tree.shiftLeft();
@@ -105,6 +108,7 @@ btNode<Item>* BST<Item>::minimum(){
 
 template <class Item>
 btNode<Item>* BST<Item>::maximum(){
+	assert(count > 0);
 	tree.shiftToRoot();
 	while(tree.hasRight()){
 		tree.shiftRight();
@@ -115,6 +119,7 @@ btNode<Item>* BST<Item>::maximum(){
 template <class Item>
 btNode<Item>*  BST<Item>::search(const Item& target){
 	tree.shiftToRoot();
+	assert(count > 0);
 	while(!(!tree.hasLeft() && !tree.hasRight())){
 		if((tree.getNode() != NULL) && (tree.retrieve() == target)){
 			return tree.getNode();
