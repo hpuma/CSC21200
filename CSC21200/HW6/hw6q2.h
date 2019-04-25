@@ -8,17 +8,19 @@
 // Try not to change this file
 
 #include <iostream>
-#include <cstdlib>
 #include <cassert>
+#include <cctype>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
 #include <iomanip>
 #include "node.h"
 
 using namespace std;
 
-class graphData
-{
+class graphData{
 public:
-	graphData() {;}
+	graphData():vertex(0),weight(0){}
 	graphData(const size_t& inV, const int& inW) {vertex = inV; weight = inW;}
 	void setV(const size_t& inV) {vertex = inV;}
 	void setW(const int& inW) {weight = inW;}
