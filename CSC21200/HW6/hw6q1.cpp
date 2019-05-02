@@ -104,14 +104,19 @@ bool graphM<Item>::isEdge(size_t source, size_t target) const{
 template <class Item>
 Item* graphM<Item>::neighbors(size_t vertex) const{
     assert(count > 0);
-Item* myNeighbors = new Item[count]();
-    for (size_t i = 0 ; i < count; i++){
-        for(size_t j = 0; j < count; j++){
-            if(matrix[i][j] != 0){
-                myNeighbors[i] = label[i];
+    Item* track = new Item[count]();
+    size_t trackSize = 0;
+        for(size_t i = 0; i < count; i++){
+            if(matrix[vertex][i] != 0){
+                track[trackSize] = label[i];
+                trackSize++;
             }
         }
+    Item* myNeighbors = new Item[trackSize];
+    for(size_t j = 0; j < trackSize; j++){
+        myNeighbors[j] = track[j];
     }
+    delete track;
     return myNeighbors;
 }
 #endif
