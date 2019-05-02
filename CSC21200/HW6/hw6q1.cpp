@@ -8,7 +8,7 @@ graphM<Item>::graphM(){
     capacity = DEF_CAP;
     label = new Item[capacity](); //? default value.. or only for int?
     matrix = new int*[capacity]; // Rows of the matrix.
-    for (size_t i = 0 ; i < capacity; i++){ // Columns of Matrix
+    for (size_t i = 0; i < capacity; i++){ // Columns of Matrix
         matrix[i] = new int[capacity]();
     } 
     count = 0;
@@ -23,20 +23,20 @@ graphM<Item>::graphM(const graphM<Item>& source){
     matrix = new *int[capacity];
 
     //Iterate through out the entire matrix. 
-    for (size_t i = 0 ; i < capacity; i++){
-        matrix[i] = new int[capacity]; // Make a new array for each element.
-        for(size_t j = 0 ; j < capacity;  j++){ // After the array is added, copy over the contents from the source.
+    for (size_t i = 0; i < capacity; i++){
+        matrix[i] = new int[capacity](); // Make a new array for each element.
+        for(size_t j = 0; j < count;  j++){ // After the array is added, copy over the contents from the source.
             matrix[i][j] = source.matrix[i][j];
         }
     }
     // Make a new dynamic array for label
     label = new Item[capacity];
-    for (size_t k = 0 ; k < capacity ; k++){
+    for (size_t k = 0; k < capacity; k++){
         label[k] = source.label[k]; // Copy over the contents from the source label array.
     }
     
 }
-//DECONSTRUCTOR??
+//DECONSTRUCTOR?? .. DOESN'T MATTER
 
 //MODIFICATION MEMBER FUNCTIONS
 template <class Item>
@@ -55,13 +55,23 @@ void graphM<Item>::addEdge(size_t source, size_t target, int weight){
 template <class Item>
 void graphM<Item>::removeEdge(size_t source, size_t target){
     assert(count >= 2);
+    matrix[source][target] = 0;
 }
 //CONSTANT MEMBER FUNCTIONS
 template <class Item>
 void graphM<Item>::print() const{
-    for(size_t i = 0 ; i < capacity ; i++){
-        for(size_t j = 0; j < capacity; j++){
-            cout<<matrix[i][j];
+    assert(count > 0);
+    for (size_t i = 0; i < capacity; i++){
+        cout<<label[i];
+        cout<<setw(1)<<"";
+    }
+    cout<<"\n";
+    for (size_t j = 0; j < capacity; j++ ){
+        cout<<label[j];
+        cout<<setw(1)<<"";
+        for (size_t k = 0; k < capacity; k++){
+            cout<<matrix[j][k];
+            cout<<setw(1)<<"";
         }
         cout<<"\n";
     }
@@ -76,7 +86,7 @@ template <class Item>
 size_t graphM<Item>::numEdges() const{
     assert(count != 0);
     size_t edgesCount = 0;
-    for(size_t i = 0 ; i < capacity ; i++){
+    for(size_t i = 0; i < capacity; i++){
         for(size_t j = 0; j < capacity; j++){
             if(matrix[i][j] != 0){
                 edgesCount++;
@@ -93,7 +103,15 @@ bool graphM<Item>::isEdge(size_t source, size_t target) const{
 
 template <class Item>
 Item* graphM<Item>::neighbors(size_t vertex) const{
-
+    assert(count > 0);
+Item* myNeighbors = new Item[count]();
+    for (size_t i = 0 ; i < count; i++){
+        for(size_t j = 0; j < count; j++){
+            if(matrix[i][j] != 0){
+                myNeighbors[i] = label[i];
+            }
+        }
+    }
+    return myNeighbors;
 }
-
 #endif
