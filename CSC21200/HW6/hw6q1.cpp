@@ -20,7 +20,7 @@ graphM<Item>::graphM(const graphM<Item>& source){
     //COPY PRIVATE MEMBER VARIABLES
     capacity = source.capacity;
     count = source.count;
-    matrix = new *int[capacity];
+    matrix = new int*[capacity];
 
     //Iterate through out the entire matrix. 
     for (size_t i = 0; i < capacity; i++){
