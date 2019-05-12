@@ -23,8 +23,9 @@ void insert(const bagdt& addNew); // Add one item.
 
 
 // CONSTANT MEMBER FUNCTIONS.
-size_t get_size() const; // Get the size of the bag.
 size_t count(const bagdt& target) const; // Get the number of occurences within the bag.
+size_t get_size() const; // Get the size of the bag.
+size_t get_capacity() const;
 void print() const; // Print out the contents of the bag.
 
 int operator[](const size_t& i) const{
