@@ -159,12 +159,25 @@ bool graphL<Item>::isEdge(size_t source, size_t target) const{
 // Make sure the vertice has any edges.
 template<class Item>
 node<Item>* graphL<Item>::neighbors(size_t vertex) const{
-	node<graphData>* newHead; // Head of Linked list of neighbors
+	node<Item>* newHead = NULL; // Head of Linked list of neighbors.
+
 	if(list[vertex] != NULL){
-		node<graphData>* startNode = list[vertex]; // Source pointer.
-		node<graphData>* tail;
-		list_copy(startNode,newHead,tail);	
+		node<graphData>* startNode = list[vertex]; // Pointer that points to the source pointer.
+
+		newHead = new node<Item>(label[startNode->data().getV()]); // Make the first neighbor.
+		node<Item>* nodeBuild = newHead; // Make a pointer to points to that neighbor, this node will do the building.
+		startNode = startNode->link(); // Move over the source pointer.
+
+		// In this loop we will build, set link, then move to the next node.
+		while(startNode != NULL){
+			node<Item>* newNode = new node<Item>(label[startNode->data().getV()]); // Build the node.
+			nodeBuild->set_link(newNode); // Set the link to that new node.
+
+			nodeBuild = nodeBuild->link(); // move to that newly created link.
+			startNode = startNode->link(); // move to the next neighbor node. 
+		}	
 	}
 	return newHead;
 }
+
 #endif

@@ -8,7 +8,7 @@ TEST(dynamic, constructor) {
 	EXPECT_EQ(30, myBag.get_capacity());
 }
 
-TEST(dynamic, addVertex) {
+TEST(dynamic, addItem) {
 	bag myBag;
 
 	myBag.insert(8);
