@@ -7,8 +7,9 @@
 using namespace std;
 
 class bag{
-size_t DEF_CAP = 30;
+
 public: 
+size_t DEF_CAP = 30;
 typedef int bagdt;
 
 //CONSTRUCTOR
@@ -38,5 +39,5 @@ bagdt *data;
 size_t size;
 size_t capacity;
 };
-
+#include "bagDynamic.cpp"
 #endif
