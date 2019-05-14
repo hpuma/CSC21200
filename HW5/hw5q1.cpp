@@ -101,8 +101,4 @@ size_t maxDepth(const btNode<Item>*nodePtr){
     int rightTree = maxDepth(nodePtr->getRight());
     return (leftTree > rightTree)?leftTree+1:rightTree+1;
 }
-
-
-
-
 #endif
