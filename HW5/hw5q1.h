@@ -80,6 +80,7 @@ btNode<Item>* copyTree(const btNode<Item>* rootPtr);
 
 template <class Item>
 size_t treeSize(const btNode<Item>* nodePtr);
-
+template<class Item> 
+size_t maxDepth(const btNode<Item>*nodePtr);
 #include "hw5q1.cpp"
 #endif

@@ -39,9 +39,6 @@ void postorder(Process f, btNode<Item>* nodePtr){
 The function prints the nodes according to it's depth*/
 template<class Item, class SizeType> 
 void print(btNode<Item>* nodePtr, SizeType depth){
-    if(nodePtr == NULL){ 
-        return;
-    } 
      cout<<setw(4*depth)<<"";
      if(nodePtr == NULL){
         cout<<"Empty\n";
@@ -83,6 +80,9 @@ btNode<Item>* copyTree(const btNode<Item>* rootPtr){
 template<class Item> 
 size_t treeSize(const btNode<Item>* nodePtr){
     size_t count = 1;
+    if(nodePtr == NULL){
+        return 0;
+    }
     if (nodePtr->getLeft() != NULL){
         count +=treeSize(nodePtr->getLeft());
     }
@@ -91,5 +91,18 @@ size_t treeSize(const btNode<Item>* nodePtr){
     }
     return count; 
 }
+
+template <class Item>
+size_t maxDepth(const btNode<Item>*nodePtr){
+    if(nodePtr == NULL){
+        return 0;
+    }
+    int leftTree = maxDepth(nodePtr->getLeft());
+    int rightTree = maxDepth(nodePtr->getRight());
+    return (leftTree > rightTree)?leftTree+1:rightTree+1;
+}
+
+
+
 
 #endif
