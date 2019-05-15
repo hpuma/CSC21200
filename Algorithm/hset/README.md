@@ -1,37 +1,50 @@
-# #include "hset.h" 
-# AKA "Henry_set" 
-# B:5/13/19
-## Has been tested on test_hset.cpp
-# A simple data structure to be used for the graphM
-###
-### template<class type1, class type2, class type3>
-###
-# Intended use for graphs:
-### hset<char,char,int> [NAME]
-### hset<vertex1,vertex2,edgeWeight>
-###
+## #include "hset.h" 
+## AKA "Henry_set" :D
+## B:5/13/19
+## EDIT: 5/15/19
+# *** hset NEEDS FURTHER TESTING IN MAIN.
+# ***THIS README NEEDS AN UPDATE.
+##
+## A simple data structure to be used for the graphs
+### Has been tested on test_hset.cpp
+### TEMPLATE
+#### template<class vType> [NAME]
+#### hset<vertexType> [NAME]
+##
+### Intended use for graphs:
+#### hset<char> [NAME]
+##
+### NOTE: COLOR  and WEIGHT use typedef INT.
+#### COLOR = 0 --- WHITE
+#### COLOR = 1 --- GREY
+#### COLOR = 2 ---  BLACK 
+##
+##
 # Everything is defined in the header file.
+## typedef int CWTYPE // typedef for COLOR and WEIGHT.
 ### CONSTRUCTOR
 #### hset(); // Sets garbage values to private member variables.
 ###
 ### CONSTRUCTOR WITH PARAMTERS
-#### hset(type1 v1, type2 v2, type3 inWeight); // Setting predefined values.
+####  hset(vType v1, vType v2, CWTYPE inWeight = 0,CWTYPE firstColor = 0); // Setting predefined values.
 ###
 ### COPY CONSTRUCTOR
-#### hset(const hset<type1,type2,type3>& source);
+#### hset(const hset<vType>& source);
 ### 
 ### CONST FUNCTIONS
-#### type1 get_v1() const; // Gets vertex1.
-#### type2 get_v2() const; // Gets vertex2.
-#### type3 get_w() const; // Gets weight.
-#### void print() const; // Prints vertically vertex1,vertex2,weight.
+#### vType get_v1() const; // Gets vertex1.
+#### vType get_v2() const; // Gets vertex2.
+#### CWTYPE get_w() const; // Gets weight of edge.
+#### CWTYPE print() const; // Prints vertically vertex1,vertex2,weight, and color.
 ### 
 ### MODIFICATION MEMBER FUNCTIONS
-#### void set_v1(type1 v1); // Sets vertex1.
-#### void set_v2(type2 v2); // Sets vertex2.
-#### void set_w(type3 inWeight); // Sets weight.
-###
+#### void set_v1(vType v1); // Sets vertex1.
+#### void set_v2(vType v2); // Sets vertex2.
+#### void set_w(CWTYPE inWeight); // Sets weight.
+###  void set_w(CWTYP inColor); // Sets color.
 ### PRIVATE MEMBER VARIABLES
-#### type1 vertex1; // Beginning Vertex.
-#### type2 vertex2; // Ending Vertex.
-#### type3 vertex3; // Weight of edge.
+#### vType vertex1; // Beginning Vertex.
+#### vType vertex2; // Ending Vertex.
+#### CWTYPE weight; // Weight of edge.
+#### CWTYPE color_v1; // color of vertex1;
+#### CWTYPE color_v1; // color of vertex1;
