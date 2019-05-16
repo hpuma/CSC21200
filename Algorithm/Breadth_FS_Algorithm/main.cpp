@@ -43,17 +43,27 @@ void connect(graphM<char>& build, char v1, char v2, int weight){
 
 int main(){
 graphM<char> matrix;
-makeGraph(matrix,'A','E');
+makeGraph(matrix,'A','F');
 
-connect(matrix,'A','C',9);
-connect(matrix,'C','D',3);
-connect(matrix,'D','E',8);
-connect(matrix,'E','A',9);
+connect(matrix,'A','C',1);
+connect(matrix,'A','B',1);
 
-connect(matrix,'A','B',2);
-connect(matrix,'C','B',1);
-connect(matrix,'D','B',5);
-connect(matrix,'E','B',4);
+connect(matrix,'B','D',1);
+connect(matrix,'B','E',1);
+
+connect(matrix,'C','A',1);
+connect(matrix,'C','E',1);
+
+connect(matrix,'D','B',1);
+connect(matrix,'D','E',1);
+connect(matrix,'D','F',1);
+
+connect(matrix,'E','C',1);
+connect(matrix,'E','B',1);
+connect(matrix,'E','D',1);
+connect(matrix,'E','F',1);
+
+connect(matrix,'F','D',1);
+connect(matrix,'F','E',1);
 matrix.print();
-
 }

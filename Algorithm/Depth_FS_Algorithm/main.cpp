@@ -65,9 +65,5 @@ connect(matrix,'E','F',1);
 
 connect(matrix,'F','D',1);
 connect(matrix,'F','E',1);
-
-
-
 matrix.print();
-
 }
