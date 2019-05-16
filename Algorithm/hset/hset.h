@@ -56,14 +56,14 @@ void set_v2(vType v2){
 }
 void set_v1_color(CWTYPE inColor){
     if(inColor > 2){
-        cout<<"COLOR VALUE: "<<inColor<<" NOT VALID.\n";
+        cout<<"\n\tERROR COLOR VALUE: "<<inColor<<" NOT VALID.\n";
         return;
     }
     color_v1 = inColor;
 }
 void set_v2_color(CWTYPE inColor){
     if(inColor > 2){
-    cout<<"COLOR VALUE: "<<inColor<<" NOT VALID.\n";
+    cout<<"\n\tERROR COLOR VALUE: "<<inColor<<" NOT VALID.\n";
     return;
     }
     color_v2 = inColor;
