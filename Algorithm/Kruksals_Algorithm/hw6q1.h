@@ -8,8 +8,11 @@
 // Try not to change this file
 
 #include <iostream>
-#include <cstdlib>
 #include <cassert>
+#include <cctype>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
 #include <iomanip>
 
 using namespace std;
@@ -27,9 +30,9 @@ public:
     void addVertex(const Item& inLabel);
     void addEdge(size_t source, size_t target, int weight);
     void removeEdge(size_t source, size_t target);
-    Item& operator [ ] (size_t vertex) 
-        { assert(vertex < count);
-          return label[vertex]; }
+    Item& operator [ ] (size_t vertex){ 
+        assert(vertex < count);
+        return label[vertex]; }
     // CONSTANT MEMBER FUNCTIONS
     void print() const;
     size_t numVertices() const;

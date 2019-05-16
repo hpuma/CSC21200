@@ -11,7 +11,7 @@ graphM<Item>::graphM(){
     // NOTE: matrix  Array contains the intersection of vertexs, basically which two vertex connect.
     matrix = new int*[capacity]; // Columns of matrix.
     for (size_t i = 0; i < capacity; i++){ // Rows of matrix.
-        matrix[i] = new int[capacity];
+        matrix[i] = new int[capacity]();
     } 
     //NOTE: count keeps track of the number of vertices.
     count = 0; 
