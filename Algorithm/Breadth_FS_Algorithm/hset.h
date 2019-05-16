@@ -4,78 +4,103 @@
 #include<iostream>
 #include<cstdlib>
 #include<cstdio>
+#include <sstream>
 
 using namespace std;
 
-// NOTE: COLOR = 0; WHITE
-// NOTE: COLOR = 1; GREY
-// NOTE: COLOR = 2; BLACK 
-template<class type1,class type2, class type3,class type4>
+template<class vType>
 class hset{
-    public:
-    // CONSTRUCTOR
-    hset(){
-        vertex1 = type1();
-        vertex2 = type2();
-        weight  = type3();
-        color  = 0;
+public:
+typedef size_t CWTYPE;
+
+// CONSTRUCTORS
+hset(){
+    vertex1 = vType();
+    vertex2 = vType();
+    color_v1 = 0;
+    color_v2 = 0;
+    edgeWeight  = 0;
+}
+hset(vType v1, vType v2,CWTYPE vertex1_color = 0, CWTYPE vertex2_color = 0, CWTYPE inWeight = 0){
+    if((vertex1_color > 2) || (vertex2_color > 2)){  
+      cout<<"BOTH COLOR VALUES MUST BE VALID.\n";
+      if(vertex1_color > 2){cout<<vertex1_color<<" IS NOT A VALID COLOR VALUE.\n";}
+      if(vertex2_color > 2){cout<<vertex2_color<<" IS NOT A VALID COLOR VALUE.\n";}
+      return;
     }
-    hset(type1 v1, type2 v2, type3 inWeight,type4 firstColor){
     vertex1 = v1;
     vertex2 = v2;
-    weight  = inWeight;
-    color  = firstColor;
-    }
+    color_v1 = vertex1_color;
+    color_v2 = vertex2_color;
+    edgeWeight = inWeight;
+} 
 
-    // COPY CONSTRUCTOR
-    hset(const hset<type1,type2,type3>& source){
-        vertex1 = source.vertex1;
-        vertex2 = source.vertex2;
-        weight = source.weight;
-        color = source.color;
-    }
+// COPY CONSTRUCTOR
+hset(const hset<vType>& source){
+    edgeWeight = source.weight;
+    vertex1 = source.vertex1;
+    vertex2 = source.vertex2;
+    color_v1 = source.color_v1;
+    color_v2 = source.color_v2;
+}
 
-    // CONST FUNCTIONS
-    type1 get_v1() const{
-        return vertex1;
+// MODIFICATION MEMBER FUNCTIONS.
+void set_w(CWTYPE inWeight){
+    edgeWeight = inWeight;
+}
+void set_v1(vType v1){
+    vertex1 = v1;
+}
+void set_v2(vType v2){
+    vertex2 = v2;
+}
+void set_v1_color(CWTYPE inColor){
+    if(inColor > 2){
+        cout<<"\n\tERROR COLOR VALUE: "<<inColor<<" NOT VALID.\n";
+        return;
     }
+    color_v1 = inColor;
+}
+void set_v2_color(CWTYPE inColor){
+    if(inColor > 2){
+    cout<<"\n\tERROR COLOR VALUE: "<<inColor<<" NOT VALID.\n";
+    return;
+    }
+    color_v2 = inColor;
+}
 
-    type2 get_v2() const{
-        return vertex2;
-    }
+// CONSTANT MEMBER FUNCTIONS.
+CWTYPE get_w() const{
+    return edgeWeight;
+}
+vType get_v1() const{
+    return vertex1;
+}
+vType get_v2() const{
+    return vertex2;
+}
+CWTYPE get_color_v1() const{
+    return color_v1;
+}
+CWTYPE get_color_v2() const{
+    return color_v2;
+}
 
-    type3 get_w() const{
-        return weight;
-    }
-    type4 get_c() const{
-        return color;
-    }
+// PRINT PRIVATE VARIABLE CONTENTS
+void printData() const{
+    cout<<"EDGE WEIGHT  : "<<edgeWeight<<"\n";
+    cout<<"VERTEX 1: "<<vertex1<<"\n";
+    cout<<"COLOR   : "<<color_v1<<" : "<<colors[color_v1]<<"\n";
+    cout<<"VERTEX 2: "<<vertex2<<"\n";
+    cout<<"COLOR   : "<<color_v2<<" : "<<colors[color_v2]<<"\n";    
+}
 
-    // MODIFICATION MEMBER FUNCTIONS
-    void set_v1(type1 v1 = type1()){
-        vertex1 = v1;
-    }
-    void set_v2(type2 v2 = type2()){
-        vertex2 = v2;
-    }
-    void set_w(type3 inWeight = type3()){
-        weight = inWeight;
-    }
-    void set_c(type4 inColor){
-        color = inColor;
-    }
-   
-    // PRINT CONTENTS
-    void print() const{
-        cout<<vertex1<<"\n";
-        cout<<vertex2<<"\n";
-        cout<<weight<<"\n";
-        cout<<color<<"\n";
-    }
-    private:
-    type1 vertex1;
-    type2 vertex2;
-    type3 weight;
-    type4 color;
+private:
+vType vertex1;
+vType vertex2;
+string colors[3] = {"WHITE","GREY","BLACK"};
+CWTYPE color_v1; 
+CWTYPE color_v2; 
+CWTYPE edgeWeight;
 };
 #endif
