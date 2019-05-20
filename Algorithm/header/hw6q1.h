@@ -14,6 +14,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iomanip>
+#include <vector>
 
 using namespace std;
 
@@ -38,7 +39,7 @@ public:
     size_t numVertices() const;
     size_t numEdges() const;
     bool isEdge(size_t source, size_t target) const;
-    Item* neighbors(size_t vertex) const;
+    vector<Item> neighbors(size_t vertex) const;
     size_t index(const Item& target) const 
         { for(size_t i = 0; i < count; i++) {
             if(label[i] == target)

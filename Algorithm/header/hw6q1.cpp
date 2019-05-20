@@ -118,18 +118,16 @@ bool graphM<Item>::isEdge(size_t source, size_t target) const{
 }
 
 template <class Item>
-Item* graphM<Item>::neighbors(size_t vertex) const{
+vector<Item> graphM<Item>::neighbors(size_t vertex) const{
     if(count > 0){
-    	Item* myNeighbors = new Item[count](); // Make an array to store the possible neighbors.
-    	size_t neighCount= 0;
+    	 // Make an vector to store the possible neighbors.
+    	    vector<Item> myNeighbors;
         	for(size_t i = 0; i < count; i++){ // Iterate through matrix.
-            	if(matrix[vertex][i] > 0){ // 
-                	myNeighbors[neighCount] = label[i]; // Add the label to the array of neighbors.
-                	neighCount++;
+            	if(matrix[vertex][i] > 0){ // Add a label to the neighbor vector if the weight is greater than 0, meaning that there is an edge.
+                	myNeighbors.push_back(label[i]);
             	}
         	}
-    // Take our array and resize it nicely ... functon resize is given in the header file.
-    myNeighbors = resize(myNeighbors,neighCount); // NOTE: can't return resize(myNeighbors,neighCount); because you can't return template types.
+    // Return the vector containing the neighbors.
     return myNeighbors;
     } 
 }

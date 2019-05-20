@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include "header/hw6q1.h"
 #include "header/hset.h"
 using namespace std;
@@ -45,25 +46,28 @@ int main(){
 graphM<char> matrix;
 makeGraph(matrix,'A','F');
 
-connect(matrix,'A','C',1);
 connect(matrix,'A','B',1);
+connect(matrix,'A','D',1);
+connect(matrix,'A','F',1);
 
-connect(matrix,'B','D',1);
+connect(matrix,'B','A',1);
 connect(matrix,'B','E',1);
+connect(matrix,'B','C',1);
 
-connect(matrix,'C','A',1);
-connect(matrix,'C','E',1);
+connect(matrix,'C','B',1);
+connect(matrix,'C','F',1);
+connect(matrix,'C','D',1);
 
-connect(matrix,'D','B',1);
+connect(matrix,'D','C',1);
+connect(matrix,'D','A',1);
 connect(matrix,'D','E',1);
-connect(matrix,'D','F',1);
 
-connect(matrix,'E','C',1);
-connect(matrix,'E','B',1);
 connect(matrix,'E','D',1);
+connect(matrix,'E','B',1);
 connect(matrix,'E','F',1);
 
-connect(matrix,'F','D',1);
 connect(matrix,'F','E',1);
+connect(matrix,'F','C',1);
+connect(matrix,'F','A',1);
 matrix.print();
 }
