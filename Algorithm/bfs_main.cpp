@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 #include "header/hw6q1.h"
 #include "header/hset.h"
 using namespace std;
@@ -38,13 +39,39 @@ void connect(graphM<char>& build, char v1, char v2, int weight){
  
 }
 
+// COLOR 0 : WHITE
+// COLOR 1 : GREY
+// COLOR 2 : BLACK
+
+vector<char> bfs(graphM<char> graph){
+    vector<int> color;
+    vector<char> neighbors;
+    vector<char> graphVertex;
 
 
+    queue<char> graphList;
+    char vertex = graph[0];
+    graphList.push(vertex);
 
+    for(size_t i = 0; i < graph.numVertices(); i++){
+        color.push_back(0); // Setting all the vertexes to white.
+    }
 
-
-
-
+    while(!graphList.empty()){
+        vertex = graphList.front();
+        graphList.pop();
+        neighbors = graph.neighbors(graph.index(vertex));
+        for(size_t j = 0; j < neighbors.size(); j++){
+            if(color[graph.index(neighbors[j])] == 0){
+                color[graph.index(neighbors[j])] = 1;
+                graphList.push(neighbors[j]);
+            }
+        }
+        color[graph.index(vertex)] = 2;
+        graphVertex.push_back(vertex);
+    }
+    return graphVertex;
+}
 
 
 int main(){
@@ -75,4 +102,10 @@ connect(matrix,'F','E',1);
 connect(matrix,'F','C',1);
 connect(matrix,'F','A',1);
 matrix.print();
+vector<char> test = bfs(matrix);
+
+for (vector<char>::iterator i = test.begin(); i != test.end(); i++){
+    cout<<(*i);
+}
+
 }

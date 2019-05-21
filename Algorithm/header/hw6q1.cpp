@@ -119,16 +119,16 @@ bool graphM<Item>::isEdge(size_t source, size_t target) const{
 
 template <class Item>
 vector<Item> graphM<Item>::neighbors(size_t vertex) const{
+    vector<Item> myNeighbors;
     if(count > 0){
     	 // Make an vector to store the possible neighbors.
-    	    vector<Item> myNeighbors;
         	for(size_t i = 0; i < count; i++){ // Iterate through matrix.
             	if(matrix[vertex][i] > 0){ // Add a label to the neighbor vector if the weight is greater than 0, meaning that there is an edge.
                 	myNeighbors.push_back(label[i]);
             	}
         	}
+    } 
     // Return the vector containing the neighbors.
     return myNeighbors;
-    } 
 }
 #endif
