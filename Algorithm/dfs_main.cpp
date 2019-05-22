@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <stack>
 #include "header/hw6q1.h"
 #include "header/hset.h"
 using namespace std;
@@ -37,6 +38,30 @@ void connect(graphM<char>& build, char v1, char v2, int weight){
     build.addEdge(target,source,weight);
  
 }
+
+vector<char> bfs(graphM<char> graph){
+    vector<int> color;
+    vector<char> neighbors;
+    vector<char> childNeighbors;
+
+    vector<char> graphVertex;
+
+    stack<char> graphList;
+    char vertex = graph[0];
+    graphList.push(vertex);
+
+    for(size_t i = 0; i < graph.numVertices(); i++){
+        color.push_back(0); // Setting all the vertexes to white.
+    }
+
+    while(!graphList.empty()){
+        vertex = graphList.top();
+        graphList.pop();
+        neighbors = graph.neighbors(graph.index(vertex));
+        
+    return graphVertex;
+}
+
 
 
 

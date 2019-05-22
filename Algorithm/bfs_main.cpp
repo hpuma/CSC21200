@@ -42,12 +42,10 @@ void connect(graphM<char>& build, char v1, char v2, int weight){
 // COLOR 0 : WHITE
 // COLOR 1 : GREY
 // COLOR 2 : BLACK
-
 vector<char> bfs(graphM<char> graph){
     vector<int> color;
     vector<char> neighbors;
     vector<char> graphVertex;
-
 
     queue<char> graphList;
     char vertex = graph[0];
