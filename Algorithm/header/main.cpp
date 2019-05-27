@@ -21,7 +21,6 @@ int main(){
     cout<<dummy1->get_v2()<<'\n';
     cout<<dummy1->get_color_v1()<<'\n';
     cout<<dummy1->get_color_v2()<<'\n';
-
     
     return 0; 
 }

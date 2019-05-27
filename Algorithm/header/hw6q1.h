@@ -15,7 +15,6 @@
 #include <cstdlib>
 #include <iomanip>
 #include <vector>
-
 using namespace std;
 
 template <class Item>
