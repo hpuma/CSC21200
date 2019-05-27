@@ -28,13 +28,22 @@ bag::~bag(){
 
 size_t bag::erase(const bagdt& item){
     size_t itemsRemoved = 0;
-    for(size_t i = 0; i < size; i++){
-        if(data[i] == item){
-            data[i] = data[size-1];
-            size--;
+    bagdt* newData = new bagdt[capacity];
+    size_t i = 0;
+    size_t j = 0;
+    while(i < size){
+        if(data[i]!= item){
+            newData[j] = data[i];
+            j++;
+        }
+        else{
             itemsRemoved++;
         }
+        i++;
     }
+    delete data;
+    data = newData;
+    size = j;
     return itemsRemoved;
 }
 
