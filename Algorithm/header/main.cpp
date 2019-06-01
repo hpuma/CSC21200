@@ -31,10 +31,22 @@ int main(){
     cout<<myVertex.get_vertex()<<endl;
     vector<char> neigh = {'s','d','f','a'};
     myVertex.set_neighbors(neigh);
-    
-
-
-
+    vector<char> neighList = myVertex.get_neighbors();
+    cout<<"MY VERTEX NEIGHBOR LIST\n";
+    for(vector<char>::iterator itr = neighList.begin(); itr != neighList.end(); itr++){
+        cout<<(*itr)<<" ";
+    }
+    cout<<"\n--------------------\n";
+    ivertex<char> newVertex = myVertex;
+    cout<<newVertex.get_color()<<endl;
+    cout<<newVertex.get_vertex()<<endl;
+    cout<<"NEW VERTEX NEIGHBOR LIST\n";
+    for(vector<char>::iterator it = neighList.begin(); it != neighList.end(); it++){
+        cout<<(*it)<<" ";
+    }
+    cout<<"\n--------------------\n";
+    cout<<myVertex.neighborAt(2)<<endl;
+    cout<<myVertex.isNeighbor('l')<<endl;
     
     return 0; 
 }

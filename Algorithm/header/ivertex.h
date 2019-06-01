@@ -42,6 +42,7 @@ void set_color(size_t colorID){
     color = colorID;
 }
 void set_neighbors(vector<Item> neighborList){
+    neighbors.clear();
     for(size_t i = 0 ; i < neighborList.size(); i++){
         neighbors.push_back(neighborList[i]);
     }
@@ -60,11 +61,40 @@ vector<Item> get_neighbors() const{
     return neighbors;
 }
 
+Item neighborAt(size_t index){
+    if(index <neighbors.size()){
+         return neighbors[index];
+    }
+    return Item();
+}
+
+bool isNeighbor(Item vertex) const{
+    for(size_t i = 0; i < neighbors.size(); i++){
+        if(neighbors[i] == vertex){
+            return true;
+        }
+    }
+    return false;
+}
+void operator=(ivertex source){
+    this.vertex = source.vertex;
+    this.color = source.color;
+    neighbors.clear();
+    for(size_t i = 0; i < source.neighbors.size(); i++){
+        neighbors.push_back(source.neighbors[i]);
+    }
+}
+
 private:
 Item vertex;
 size_t color;
 vector<Item> neighbors;
 
 };
+
+
+
+
+
 
 #endif 
