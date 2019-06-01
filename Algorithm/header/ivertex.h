@@ -7,24 +7,24 @@
 using namespace std;
 
 template <class Item>
-class iVertex{
+class ivertex{
 public:
 
 // CONSTRUCTORS.
-iVertex(){
+ivertex(){
     color  = 0;
 }
-iVertex(Item vertexID, size_t colorID, vector<Item> neighborList){
+ivertex(Item vertexID, size_t colorID, vector<Item> neighborList){
     if(colorID > 2){
         cout<<"ERROR: colorID NOT CORRECT COLOR\n";
-        return;
+        return;      
     }
     vertex = vertexID;
     color  = colorID;
     neighbors = neighborList;
 }
 // COPY CONSTRUCTOR.
-iVertex(const iVertex& source){
+ivertex(const ivertex& source){
     vertex = source.vertex;
     color  = source.color;
     neighbors = source.neighbors;
@@ -42,8 +42,9 @@ void set_color(size_t colorID){
     color = colorID;
 }
 void set_neighbors(vector<Item> neighborList){
-    vector<Item>::iterator copyPoint = neighbors.begin();
-    copy(neighborList.begin(),neighborList.end(),inserter(neighbors,copyPoint));
+    for(size_t i = 0 ; i < neighborList.size(); i++){
+        neighbors.push_back(neighborList[i]);
+    }
 }
 
 // CONSTANT MEMBER FUNCTIONS. 

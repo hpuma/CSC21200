@@ -3,6 +3,7 @@
 #include <queue>
 #include "header/hw6q1.h"
 #include "header/hset.h"
+#include "header/ivertex.h"
 using namespace std;
 // FUNCTIONS TO BUILD THE GRAPH
 
@@ -43,6 +44,7 @@ void connect(graphM<char>& build, char v1, char v2, int weight){
 // COLOR 1 : GREY
 // COLOR 2 : BLACK
 vector<char> bfs(graphM<char> graph){
+    ivertex<char> myVertex;
     vector<int> color;
     vector<char> neighbors;
     vector<char> graphVertex;
