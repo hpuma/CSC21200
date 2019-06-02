@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <iomanip>
 #include "header/hw6q1.h"
 #include "header/hset.h"
 #include "header/ivertex.h"
@@ -19,7 +20,6 @@ void makeGraph(graphM<char>& build, char beginLetter,char endLetter){
 }
 
 // connect: Makes and edge that connects both ways.
- 
 // build: The graph to build on.
 // v1: First vertex.
 // v2: Ending vertex.
@@ -27,14 +27,17 @@ void makeGraph(graphM<char>& build, char beginLetter,char endLetter){
 void connect(graphM<char>& build, char v1, char v2, int weight){
     size_t source = 0;
     size_t target = 0;
+    // When the input letters are upper case.
     if((int)v1 >=65){
         source = ((int)v1)%65;
         target = ((int)v2)%65;
     }
+    // When the input letters are lower case.
     else if ((int)v1 >= 97){
         source = ((int)v1)%97;
         target = ((int)v2)%97;
     }
+    // Adding edges both ways.
     build.addEdge(source,target,weight);
     build.addEdge(target,source,weight);
  
@@ -44,20 +47,21 @@ void connect(graphM<char>& build, char v1, char v2, int weight){
 // COLOR 1 : GREY
 // COLOR 2 : BLACK
 vector<char> bfs(graphM<char> graph){
-    ivertex<char> myVertex;
+    ivertex<char> myVertex; // Vector containg the corresponding BFS walk.
     
-    vector<int> color;
-    vector<char> neighbors;
-    vector<char> graphVertex;
+    // Vectors containing information about vertex.
+    vector<char> graphVertex; // Vertex id.
+    vector<char> neighbors; // List of niehgbors to the current vertex.
+    vector<int> color; // Color Values of each vertex in the graph vertex.
 
-    queue<char> graphList;
-    char vertex = graph[0];
-    graphList.push(vertex);
+    queue<char> graphList; // Queue used for navigation.
+
+    char vertex = graph[0]; // Variable used to store the current vertex we're at.
+    graphList.push(vertex); 
 
     for(size_t i = 0; i < graph.numVertices(); i++){
         color.push_back(0); // Setting all the vertexes to white.
     }
-
     while(!graphList.empty()){
         vertex = graphList.front();
         graphList.pop();
@@ -103,10 +107,13 @@ connect(matrix,'F','E',1);
 connect(matrix,'F','C',1);
 connect(matrix,'F','A',1);
 matrix.print();
-vector<char> test = bfs(matrix);
 
-for (vector<char>::iterator i = test.begin(); i != test.end(); i++){
-    cout<<(*i);
+// OUTPUT.
+cout<<"Neighbor Walk BFS:\n";
+vector<char> test = bfs(matrix);
+for(vector<char>::iterator itr = test.begin(); itr != test.end(); itr++){
+    cout<<(*itr)<<setw(2);
 }
 
+return 0;
 }

@@ -5,7 +5,7 @@
 #include <vector> 
 #include <iterator>
 using namespace std;
-
+// NEEEEEEEEEDS TO BE REDONE !!!!!!
 template <class Item>
 class ivertex{
 public:
@@ -23,14 +23,14 @@ ivertex(Item vertexID, size_t colorID, vector<Item> neighborList){
     color  = colorID;
     neighbors = neighborList;
 }
-// COPY CONSTRUCTOR.
+// COPY CONSTRUCTOR  - - - - - - - - - - - 
 ivertex(const ivertex& source){
     vertex = source.vertex;
     color  = source.color;
     neighbors = source.neighbors;
 }
 
-// MODIFICATION MEMBER FUNCTIONS.
+// MODIFICATION MEMBER FUNCTIONS  - - - - - - - - - - - 
 void set_vertex(Item vertexID){
     vertex = vertexID;
 }
@@ -41,14 +41,12 @@ void set_color(size_t colorID){
     }
     color = colorID;
 }
-void set_neighbors(vector<Item> neighborList){
+void set_neighbors(vector<Item> neighborhood){
     neighbors.clear();
-    for(size_t i = 0 ; i < neighborList.size(); i++){
-        neighbors.push_back(neighborList[i]);
-    }
+    neighbors = neighborhood;
 }
 
-// CONSTANT MEMBER FUNCTIONS. 
+ // CONSTANT MEMBER FUNCTION - - - - - - - - - - - 
 Item get_vertex() const{
     return vertex;
 }
@@ -57,7 +55,7 @@ size_t get_color() const{
     return color;
 }
 
-vector<Item> get_neighbors() const{
+vector<Item> get_neighbors() const{ 
     return neighbors;
 }
 
