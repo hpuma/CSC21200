@@ -24,29 +24,38 @@ int main(){
     // cout<<dummy1->get_color_v1()<<'\n';
     // cout<<dummy1->get_color_v2()<<'\n';
 
-    ivertex<char> myVertex;
-    myVertex.set_color(1);
-    cout<<myVertex.get_color()<<endl;
-    myVertex.set_vertex('c');
-    cout<<myVertex.get_vertex()<<endl;
-    vector<char> neigh = {'s','d','f','a'};
-    myVertex.set_neighbors(neigh);
-    vector<char> neighList = myVertex.get_neighbors();
-    cout<<"MY VERTEX NEIGHBOR LIST\n";
-    for(vector<char>::iterator itr = neighList.begin(); itr != neighList.end(); itr++){
-        cout<<(*itr)<<" ";
-    }
-    cout<<"\n--------------------\n";
-    ivertex<char> newVertex = myVertex;
-    cout<<newVertex.get_color()<<endl;
-    cout<<newVertex.get_vertex()<<endl;
-    cout<<"NEW VERTEX NEIGHBOR LIST\n";
-    for(vector<char>::iterator it = neighList.begin(); it != neighList.end(); it++){
-        cout<<(*it)<<" ";
-    }
-    cout<<"\n--------------------\n";
-    cout<<myVertex.neighborAt(2)<<endl;
-    cout<<myVertex.isNeighbor('l')<<endl;
+
+    // iVERTEX TEST1 - - - - - - - - - -
+
+    // size_t num = 9;
+    // ivertex<char> myVertex(num);
+    // myVertex.printInfo();
+    // myVertex.changeVertex(2,'A');
+    // myVertex.changeColor(2,3);
+    // myVertex.printInfo();
+
+    // END TEST1 - - - - - - - - - - -
     
+    // IVERTEX TEST2
+
+    // ivertex<char> myVertex;
+    // for(size_t i = 65; i < 71; i++){ // Making 9 iVertex.
+    //     myVertex.addVertex((char)i);
+    //     myVertex.addColor(1);
+    //     myVertex.addNeighborhood();
+    // }
+    // myVertex.printInfo();
+
+    // END TEST2 - - - - - - - - - - -
+
+    // IVERTEX TEST3 
+        vector<char> vertexList = {'A','B','C'};
+        vector<int> vertexColor = {1,1,1};
+        vector<vector<char> > neighbors = {{'E'},{'R'},{'D'}};
+        ivertex<char> myVertex(vertexList,vertexColor,neighbors);
+        myVertex.printInfo();
+    // END TEST3
+
+
     return 0; 
 }

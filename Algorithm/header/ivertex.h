@@ -3,7 +3,8 @@
 #define __IVERTEX_H__
 #include <iostream> 
 #include <vector> 
-#include <iterator>
+#include <iomanip>
+#include <cassert>
 using namespace std;
 // NEEEEEEEEEDS TO BE REDONE !!!!!!
 template <class Item>
@@ -12,87 +13,205 @@ public:
 
 // CONSTRUCTORS.
 ivertex(){
-    color  = 0;
 }
-ivertex(Item vertexID, size_t colorID, vector<Item> neighborList){
-    if(colorID > 2){
-        cout<<"ERROR: colorID NOT CORRECT COLOR\n";
-        return;      
+
+ivertex(size_t numVertex){
+    for(size_t i = 0; i < numVertex; i++){
+        vertexID.push_back('0');
+        colorID.push_back(0);
+        vector<Item> myVector;
+        neighbors.push_back(myVector);
     }
-    vertex = vertexID;
-    color  = colorID;
-    neighbors = neighborList;
 }
+
+ivertex(vector<Item> vertexID, vector<int> colorID, vector<vector<Item>> neighborList){
+   if(vertexID.size() == colorID.size() && vertexID.size() == neighborList.size()){
+        this->vertexID = vertexID;
+        this->colorID = colorID;
+        this->neighbors = neighborList;
+   }
+   else{
+       cout<<"ALL INPUT VECTORS MUST BE THE SAME SIZE!\n";
+       return;
+   }
+}
+
 // COPY CONSTRUCTOR  - - - - - - - - - - - 
-ivertex(const ivertex& source){
-    vertex = source.vertex;
-    color  = source.color;
-    neighbors = source.neighbors;
+ivertex(const ivertex<Item>& Source){
+    this.vertexID = Source.vertexID;
+    this.colorID = Source.colorID;
+    this.neighbors = Source.neighbors;
 }
 
 // MODIFICATION MEMBER FUNCTIONS  - - - - - - - - - - - 
-void set_vertex(Item vertexID){
-    vertex = vertexID;
-}
-void set_color(size_t colorID){
-    if(colorID > 2){
-        cout<<"ERROR: colorID NOT CORRECT COLOR\n";
-        return;
+void setVertexList(vector<Item> vertexID){
+    this.vertexID = vertexID;
+    if(this.colorID.empty() && this.neighbors.empty()){
+        resizeRest(0,this.vertexID);
     }
-    color = colorID;
 }
-void set_neighbors(vector<Item> neighborhood){
-    neighbors.clear();
-    neighbors = neighborhood;
+void setColorList(vector<int> colorID){
+    this.colorID = colorID;
+    if(this.vertexID.empty() && this.neighbors.empty()){
+        resizeRest(1,this.colorID);
+    }
 }
-
- // CONSTANT MEMBER FUNCTION - - - - - - - - - - - 
-Item get_vertex() const{
-    return vertex;
-}
-
-size_t get_color() const{
-    return color;
+void setNeighborList(vector<vector<Item> > neighbors){
+    this.neighbors = neighbors;
+    if(this.vertexID.empty() && this.colorID.empty()){
+        resizeRest(2,this.neighbors);
+    }
 }
 
-vector<Item> get_neighbors() const{ 
+// SETTING INDIVIDUAL VALUES PER VECTOR - - - - - - - - - - - 
+void addVertex(Item inputVertex){
+    this->vertexID.push_back(inputVertex);
+}
+void addColor(int inputColor){
+    this->colorID.push_back(inputColor);
+}
+void addNeighborhood(){
+    vector<Item> myVector;
+    this->neighbors.push_back(myVector);
+}
+
+// CHANGING INDIVIDUAL VALUES PER VECTOR - - - - - - - - - - - 
+void changeVertex(size_t index, Item vertexID){
+    if(this->vertexID.size()-1 > index){ // Make sure there is a vertex at the current index.
+        this->vertexID[index] = vertexID;
+    }
+    else{
+        cout<<"vertexID DOES NOT EXIST AT index!\n";
+    }
+}
+
+void changeColor(size_t index, int colorID){
+    if(this->colorID.size()-1 > index){ // Make sure there is a vertex at the current index.
+        if(colorID >= 0 && colorID <= 2){
+            this->colorID[index] = colorID;
+        }
+        else{
+            cout<<"COLORID VALUE NOT VALID!\n";
+        }
+    }
+    else{
+        cout<<"colorID DOES NOT EXIST AT index!\n";
+    }
+}
+
+void changeNeighbors(size_t index, vector<Item> neighbors){
+    if(this->neighbors.size() - 1 > index){
+        this->neighbors[index] = neighbors;
+    }
+    else{
+        cout<<"THERE ISN'T A VERTEX THAT EXISTS AT "<<index<<"\n";
+    }
+}
+
+ // CONSTANT MEMBER FUNCTIONS - - - - - - - - - - - 
+
+ // GETTING ENTIRE VECTOR VALUES.
+vector<Item> getVertexList() const{
+    return vertexID;
+}
+vector<int> getColorList() const {
+    return colorID;
+}
+
+vector<vector<Item> > getNeighborsList() const{
     return neighbors;
 }
 
-Item neighborAt(size_t index){
-    if(index <neighbors.size()){
-         return neighbors[index];
+// GETTING INDIVIDUAL VECTOR VALUES.
+Item getVertex(size_t index){
+    if(vertexID.size() - 1 >= index){
+        return vertexID[index];
     }
     return Item();
 }
-
-bool isNeighbor(Item vertex) const{
-    for(size_t i = 0; i < neighbors.size(); i++){
-        if(neighbors[i] == vertex){
-            return true;
-        }
+int getColor(size_t index){
+    if(colorID.size() - 1 >= index){
+        return colorID[index];
     }
-    return false;
+    return 0;
 }
-void operator=(ivertex source){
-    this.vertex = source.vertex;
-    this.color = source.color;
-    neighbors.clear();
-    for(size_t i = 0; i < source.neighbors.size(); i++){
-        neighbors.push_back(source.neighbors[i]);
+vector<Item> getNeighborhood(size_t index) const{
+     if(neighbors.size() - 1 >= index){
+        return neighbors[index];
+    }
+    return vector<Item>();
+}
+
+void printInfo() const{
+    cout<<"PRINTING VERTEXID LIST\n";
+    for(size_t i = 0; i < vertexID.size(); i++){
+        cout<<vertexID[i]<<setw(2);
+    }
+    cout<<"\n";
+
+    cout<<"PRINTING COLORID LIST\n";
+    for(size_t j = 0; j < colorID.size(); j++){
+        cout<<colorID[j]<<setw(2);
+    }
+    cout<<"\n";
+    
+    if(neighbors[0].empty()){
+        cout<<"NEIGHBORS FOR EACH VERTEX EMPTY\n";
+        cout<<"NUMBER OF NEIGHBORHOODS: "<<neighbors.size()<<"\n\n";
+    }
+    else{
+        cout<<"PRINTING NEIGHBORS: "<<neighbors.size()<<setw(2)<<"\n";
+        for (size_t k = 0; k < neighbors.size(); k++){
+            cout<<vertexID[k]<<":"<<setw(2);
+            for (size_t l = 0; l < neighbors[k].size(); l++){
+                cout<<neighbors[k][l]<<setw(2);
+            }
+            cout<<"\n";
+        }
     }
 }
 
 private:
-Item vertex;
-size_t color;
-vector<Item> neighbors;
+vector<Item> vertexID; // Vector containing the set if vertex IDs;
+vector<int> colorID; // Vector containing the current color of each vertex... they are linked colorwise.
+vector<vector<Item>> neighbors; // 2D Vector containing vectors of 
+
+// OPTION
+// 0  - vertexID <-- this is the initVector ... resize the rest.
+// 1  - colorID <-- this is the initVector ... resize the rest.
+// 2  - neighbors <-- this is the initVector ... resize the rest.
+void resizeRest(size_t OPTION, vector<Item> initVector){
+    assert(OPTION >= 0 && OPTION <=2);
+    size_t targetSize = initVector.size();
+    if(OPTION == 0){ 
+        while(this.colorID.size() != targetSize){
+            this.colorID.push_back(0);
+        }
+        while(this.neighbors.size() != targetSize){
+            vector<Item> myVector;
+            this.neighbors.push_back(myVector);
+        }
+    }
+    else if (OPTION == 1){
+        while(this.vertexID.size() != targetSize){
+            this.vertexID.push_back('0');
+        }
+        while(this.neighbors.size() != targetSize){
+            vector<Item> myVector;
+            this.neighbors.push_back(myVector);
+        }
+    }
+    else if(OPTION == 2){
+        while(this.colorID.size() != targetSize){
+            this.colorID.push_back(0);
+        }
+        while(this.vertexID.size() != targetSize){
+            this.vertexID.push_back('0');
+        }
+    }
+}
+
 
 };
-
-
-
-
-
 
 #endif 
