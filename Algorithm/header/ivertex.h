@@ -6,16 +6,14 @@
 #include <iomanip>
 #include <cassert>
 using namespace std;
-// NEEEEEEEEEDS TO BE REDONE !!!!!!
+
 template <class Item>
 class ivertex{
 public:
 
 // CONSTRUCTORS.
-ivertex(){
-}
-
-ivertex(size_t numVertex){
+ivertex(){} // Does nothing because all vectors are empty.
+ivertex(size_t numVertex){ // Given a value, set the color, vertexID, and vector<vector> the same dimension.
     for(size_t i = 0; i < numVertex; i++){
         vertexID.push_back('0');
         colorID.push_back(0);
@@ -25,41 +23,43 @@ ivertex(size_t numVertex){
 }
 
 ivertex(vector<Item> vertexID, vector<int> colorID, vector<vector<Item>> neighborList){
-   if(vertexID.size() == colorID.size() && vertexID.size() == neighborList.size()){
+   if(vertexID.size() == colorID.size() && vertexID.size() == neighborList.size()){ // Make sure that the input vectors have the same dimension! Vertexes can't be missing a color, or there can't be more colors than there are vertex.
         this->vertexID = vertexID;
         this->colorID = colorID;
         this->neighbors = neighborList;
    }
    else{
-       cout<<"ALL INPUT VECTORS MUST BE THE SAME SIZE!\n";
+       cout<<"ALL INPUT VECTORS MUST BE THE SAME SIZE!\n"; // Don't do nothing unless all vectors are the same dimension.
        return;
    }
 }
 
 // COPY CONSTRUCTOR  - - - - - - - - - - - 
 ivertex(const ivertex<Item>& Source){
-    this.vertexID = Source.vertexID;
-    this.colorID = Source.colorID;
-    this.neighbors = Source.neighbors;
+    if(Source.vertexID.size() == Source.colorID.size() && Source.vertexID.size() == Source.neighbors.size()){
+    this->vertexID = Source.vertexID;
+    this->colorID = Source.colorID;
+    this->neighbors = Source.neighbors;
+    }
 }
 
 // MODIFICATION MEMBER FUNCTIONS  - - - - - - - - - - - 
 void setVertexList(vector<Item> vertexID){
     this.vertexID = vertexID;
-    if(this.colorID.empty() && this.neighbors.empty()){
-        resizeRest(0,this.vertexID);
+    if(this->colorID.empty() && this->neighbors.empty()){ // In case other vectors haven't been set already.
+        resizeRest(0,this->vertexID);
     }
 }
 void setColorList(vector<int> colorID){
-    this.colorID = colorID;
-    if(this.vertexID.empty() && this.neighbors.empty()){
-        resizeRest(1,this.colorID);
+    this->colorID = colorID;
+    if(this->vertexID.empty() && this->neighbors.empty()){ // In case other vectors haven't been set up already.
+        resizeRest(1,this->colorID);
     }
 }
 void setNeighborList(vector<vector<Item> > neighbors){
-    this.neighbors = neighbors;
-    if(this.vertexID.empty() && this.colorID.empty()){
-        resizeRest(2,this.neighbors);
+    this->neighbors = neighbors;
+    if(this->vertexID.empty() && this->colorID.empty()){ // In case other vectors haven't been set up already.
+        resizeRest(2,this->neighbors);
     }
 }
 
@@ -73,6 +73,11 @@ void addColor(int inputColor){
 void addNeighborhood(){
     vector<Item> myVector;
     this->neighbors.push_back(myVector);
+}
+void balanceData(){ // This will only resize accoring to the number of vertex.
+    if(this->vertexID.size() > this->colorID.size() && this->vertexID.size() > this->neighbors.size()){
+        resizeRest(0,this->vertexID);
+    }
 }
 
 // CHANGING INDIVIDUAL VALUES PER VECTOR - - - - - - - - - - - 
@@ -100,7 +105,7 @@ void changeColor(size_t index, int colorID){
 }
 
 void changeNeighbors(size_t index, vector<Item> neighbors){
-    if(this->neighbors.size() - 1 > index){
+    if(this->neighbors.size() - 1 > index){ // Make sure a neighbor vector exists at index!.
         this->neighbors[index] = neighbors;
     }
     else{
