@@ -1,7 +1,12 @@
 #ifndef __HEAP_CPP__
 #define __HEAP_CPP__
 #include "hw5q5.h"
-// NOTE ... the root index
+/*
+NOTE:
+1.A Heap is must be a complete tree, meaning that the nodes are strictly added from left to right.
+2.The parent node always has a larger value than it's children.
+2.LEFT CHILD = A[2i+1], RIGHT CHILD = 2[i+2]
+*/
 template<class Item>
 Heap<Item>::Heap(){
 	capacity = DEF_CAP;
@@ -31,32 +36,37 @@ Item Heap<Item>::removeMax(){
 
 template<class Item>
 void Heap<Item>::maxHeapify(const size_t& i){
+	// NOTE: Current Node i = Parent.
+	// Set the largest node as the current node by default. This is the index of the element with the largest value.
 	size_t largest = i;
 
+	// Make sure that the left childindex is within the array bounds AND check if the left child has its value greater than the parent.
 	if (left(i) <= getCount() && data[left(i)] > data[i]){
-		largest = left(i);
+		largest = left(i); // If the right child has a greater value than the value at the largest index, then set the largest index to the left child index.
 	}
 	else{
-		largest = i;  
+		largest = i;  // Set the largest to the parent.
 	}
-	if(right(i) <= getCount() && data[right(i)] > data[i]){
-		largest = right(i); 
+	// Make sure that the right child index is within the array bounds AND check if the value of the right child is greater than the node at the largest index.
+	if(right(i) <= getCount() && data[right(i)] > data[largest]){
+		largest = right(i); // If the right child has a greater value than the value at the largest index, then set the largest index to the right child index.
 	}
+	/* This while loop checks if one of the children nodes have a greater value than the parent. If it doesn't, then largest = i which is the parent.
+	This means that there is no swapping required.
+	However, if a child has the largest value then the index of that child will be stored in largest
+	A swap must occur to apply the Max Heap property.*/
 	if(largest != i){ 
 		swap(data[i],data[largest]); 
 		maxHeapify(largest);
 	}
-
 }
 
 template<class Item>
 void Heap<Item>::buildMaxHeap(){
-	size_t index = getCount();
-
-	for (size_t i = getCount()-1; i >= 1; i--){
-		swap(data[0],data[i]);
-		index--;
-		maxHeapify(0);
+	// Apply the max heap property from the bottom to top.
+	size_t heapSize = getCount();
+	for (size_t i = floor(heapSize/2); i >= 1; i--){
+		maxHeapify(i);
 	}
 }
 
